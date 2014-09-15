@@ -1,0 +1,11 @@
+{
+  "name": "abm",
+  "main": "index.html",
+  "window": {
+    "toolbar": false,
+    "width": 1024,
+    "height": 700,
+	"position": "center",
+	"icon": "img/favicon.png"
+  }
+}

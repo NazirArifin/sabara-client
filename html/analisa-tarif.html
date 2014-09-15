@@ -1,0 +1,117 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(3)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<div class="well">
+							<form role="form" class="form-horizontal" name="formarbm">
+								<div class="form-group">
+									<label for="atarif-unit" class="col-md-1 col-md-offset-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+									<div class="col-md-3" data-ng-show="needUnit()">
+										<select name="unit" id="atarif-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="atarif.unit">
+											<option value="0">-- pilih unit --</option>
+										</select>
+									</div>
+									
+									<label for="atarif-kdproses" class="col-md-2 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">KDPROSES:</label>
+									<div class="col-md-3">
+										<select name="kdproses" id="atarif-kdproses" class="form-control" data-ng-model="atarif.kdproses" data-ng-options="c.id as c.nama for c in kdproses"></select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="arbm-blth" class="col-md-1 col-md-offset-1 control-label">BLTH:</label>
+									<div class="col-md-3">
+										<select name="blth" id="atarif-blth" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="atarif.blth"></select>
+									</div>
+									<div class="col-md-5">
+										<button class="btn btn-primary" data-ng-click="loadData()"><i class="fa fa-fw fa-search"></i> Tampilkan</button>
+										<a data-ng-href="{{server}}/excel/analisa/tarif?{{getURL()}}" class="btn btn-success tooltips" title="ekspor ke excel"><i class="fa fa-save fa-lg"></i></a>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row" data-ng-show="rbmList.length > 0">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<table class="table table-bordered table-condensed table striped table-hover" data-ng-hide="atarif.kdproses == 2">
+							<thead>
+								<tr>
+									<th>NO</th>
+									<th>TARIF</th>
+									<th>DAYA</th>
+									<th>TOTAL PLG</th>
+									<th>STAND LALU</th>
+									<th>STAND INI</th>
+									<th>PMK LALU</th>
+									<th>PMK INI</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="c in rbmList">
+									<td>{{$index + 1}}.</td>
+									<td>{{c.tarif}}</td>
+									<td>{{c.daya}}</td>
+									<td class="text-right">{{c.plg}}</td>
+									<td class="text-right">{{c.st_lalu}}</td>
+									<td class="text-right">{{c.st_ini}}</td>
+									<td class="text-right">{{c.kwh_lalu}}</td>
+									<td class="text-right">{{c.kwh_ini}}</td>
+								</tr>
+							</tbody>
+						</table>
+						<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="atarif.kdproses == 2">
+							<thead>
+								<tr>
+									<th>NO</th>
+									<th>TARIF</th>
+									<th>DAYA</th>
+									<th>TOTAL PLG</th>
+									<th>LWBP LALU</th>
+									<th>LWBP INI</th>
+									<th>WBP LALU</th>
+									<th>WBP INI</th>
+									<th>KVARH LALU</th>
+									<th>KVARH INI</th>
+									<th>PMK KWH INI</th>
+									<th>PMK KWH LALU</th>
+									<th>PMK KVARH INI</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="c in rbmList">
+									<td>{{$index + 1}}</td>
+									<td>{{c.tarif}}</td>
+									<td>{{c.daya}}</td>
+									<td class="text-right">{{c.plg}}</td>
+									<td class="text-right">{{c.lwbp_lalu}}</td>
+									<td class="text-right">{{c.lwbp_ini}}</td>
+									<td class="text-right">{{c.wbp_lalu}}</td>
+									<td class="text-right">{{c.wbp_ini}}</td>
+									<td class="text-right">{{c.kvarh_ini}}</td>
+									<td class="text-right">{{c.kvarh_lalu}}</td>
+									<td class="text-right">{{c.kwh_ini}}</td>
+									<td class="text-right">{{c.kwh_lalu}}</td>
+									<td class="text-right">{{c.pkvarh_ini}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

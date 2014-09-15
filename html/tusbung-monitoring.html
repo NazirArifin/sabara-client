@@ -1,0 +1,92 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(4)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> MONITORING TUSBUNG</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2">
+									<div class="well">
+										<form role="form" class="form-horizontal" name="formi">
+											<div class="form-group" data-ng-show="needUnit()">
+												<label for="hp-unit" class="col-md-2 col-md-offset-1 control-label">UNIT:</label>
+												<div class="col-md-3">
+													<select name="unit" id="hp-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="hp.unit" data-ng-change="loadRBM()">
+														<option value="0">-- pilih unit --</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="hp-rbm" class="col-md-2 control-label col-md-offset-1">RBM:</label>
+												<div class="col-md-3">
+													<select name="rbm" id="hp-rbm" class="form-control" data-ng-model="hp.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+														<option value="">-- pilih rbm --</option>
+													</select>
+												</div>
+												<label for="hp-tgl" class="col-md-2 control-label">TANGGAL:</label>
+												<div class="col-md-3">
+													<input type="text" name="tanggal" id="hp-tgl" class="form-control" data-ng-model="hp.tgl" datepicker>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-8 col-md-offset-3">
+													<button class="btn btn-primary" data-ng-click="loadBaca()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
+												</div>
+											</div>
+										</form>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-bordered table-condensed table-striped table-hover">
+										<thead>
+											<tr>
+												<th>JAM TUSBUNG</th>
+												<th>PETUGAS</th>
+												<th>IDPEL</th>
+												<th>TARIF/DAYA</th>
+												<th>KETERANGAN</th>
+												<th>FOTO 1</th>
+												<th>FOTO 2</th>
+												<th>RPTG</th>
+												<th>RPBK</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>12:40</td>
+												<td>Sarimin</td>
+												<td>845434</td>
+												<td>B1/900</td>
+												<td>Meter Mundur</td>
+												<td></td>
+												<td></td>
+												<td>230.000</td>
+												<td>30.000</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

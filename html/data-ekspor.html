@@ -1,0 +1,85 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/0">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(4)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> EKSPOR DATA {{getUnit()|uppercase}}</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<form class="form-horizontal" role="form" name="formspt">
+										<div class="form-group">
+											<label for="e-unit" class="col-md-2 control-label" data-ng-show="needUnit()">UNIT:</label>
+											<div class="col-md-3" data-ng-show="needUnit()">
+												<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="ekspor.unit">
+													<option value="0">-- pilih unit --</option>
+												</select>
+											</div>
+											<label for="e-blth" class="col-md-2 control-label" data-ng-class="{ 'col-md-offset-1' : needUnit() }">BLTH:</label>
+											<div class="col-md-2">
+												<select name="blth" id="e-blth" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="ekspor.blth"></select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="e-tanggal" class="col-md-2 control-label">TANGGAL:</label>
+											<div class="col-md-2">
+												<input type="text" class="form-control" name="tanggal" id="e-tanggal" datepicker data-ng-model="ekspor.tgl">
+											</div>
+											<label for="e-kdproses" class="col-md-2 col-md-offset-2 control-label">KDPROSES:</label>
+											<div class="col-md-3">
+												<select name="kdproses" id="e-kdproses" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in kdproses" data-ng-model="ekspor.kode">
+													<option value="0">-- kode proses --</option>
+												</select>
+											</div>
+										</div>
+										<button type="button" class="btn btn-danger" save-stmt><i class="fa fa-fw fa-flash"></i> Proses Data</button>
+									</form>
+								</div>
+							</div>
+							<!--
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2">
+									<div class="spacer-h"></div><hr>
+									<table class="table table-bordered table-condensed table-striped">
+										<thead>
+											<tr>
+												<th>Tanggal Proses</th>
+												<th>Jumlah Data</th>
+												<th>Kode Proses</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>12/12/2012</td>
+												<td>356</td>
+												<td>Umum</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							-->
+							<div class="row">
+								<div class="col-md-12">
+									<div class="spacer-h"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,156 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(2)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row" data-ng-show="upload">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> IMPOR PEMBACAAN
+							<button class="btn btn-default pull-right" data-ng-click="setUpload()"><i class="fa fa-fw fa-chevron-left"></i> Batalkan</button>
+						</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<div class="text-center well">
+										<form class="form-inline" role="form" name="formip" class="text-center">
+											<div class="form-group">
+												<span class="btn btn-info btn-file tooltips" title="pilih file baca"><i class="fa fa-fw fa-paste"></i> Pilih File<input type="file" name="file" file-input accept=".txt"></input></span>
+											</div>
+											<button type="button" class="btn btn-danger" save-baca><i class="fa fa-flash fa-lg"></i> Proses File</button>
+										</form>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3">
+									<p class="alert alert-warning alert-block">
+										<i class="fa fa-fa pull-left fa-2x fa-exclamation-circle"></i> &bull; Pastikan bahwa file yang Anda masukkan adalah <strong>file hasil ekspor</strong> dari HP.<br>
+										&bull; Ukuran file maksimal adalah <code>128 MB</code>
+									</p>
+									<div class="spacer-h"></div>
+									<table class="table table-striped" data-ng-show="report.total != 0">
+										<thead>
+											<tr>
+												<th colspan="2" class="text-center">REKAPITULASI PEMBACAAN</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Pembacaan Normal</td>
+												<td>: {{report.normal}}</td>
+											</tr>
+											<tr>
+												<td>Dengan Keterangan</td>
+												<td>: {{report.keterangan}}</td>
+											</tr>
+											<tr>
+												<td>Total Data</td>
+												<td>: {{report.total}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="spacer-h"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" data-ng-show=" ! upload">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> HASIL PEMBACAAN
+							<button class="btn btn-warning pull-right" data-ng-click="setUpload()"><i class="fa fa-fw fa-upload"></i> Impor Hasil Pembacaan HP</button>
+						</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8 col-md-offset-2">
+									<div class="well">
+										<form role="form" class="form-horizontal" name="formi">
+											<div class="form-group" data-ng-show="needUnit()">
+												<label for="hp-unit" class="col-md-2 col-md-offset-1 control-label">UNIT:</label>
+												<div class="col-md-3">
+													<select name="unit" id="hp-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="hp.unit" data-ng-change="loadRBM()">
+														<option value="0">-- pilih unit --</option>
+													</select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="hp-rbm" class="col-md-2 control-label col-md-offset-1">RBM:</label>
+												<div class="col-md-3">
+													<select name="rbm" id="hp-rbm" class="form-control" data-ng-model="hp.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+														<option value="">-- pilih rbm --</option>
+													</select>
+												</div>
+												<label for="hp-tgl" class="col-md-2 control-label">TGL BACA:</label>
+												<div class="col-md-3">
+													<input type="text" name="tanggal" id="hp-tgl" class="form-control" data-ng-model="hp.tgl" datepicker>
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-8 col-md-offset-3">
+													<button class="btn btn-primary" data-ng-click="loadBaca()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
+												</div>
+											</div>
+										</form>
+									</div>
+									</div>
+								</div>
+							</div>
+							<div class="row" data-ng-show="baca.data.length > 0">
+								<div class="col-md-2 well text-center col-md-offset-3"><small><strong>Total</strong> : <span class="badge badge-small">{{baca.total}}</span></small></div>
+								<div class="col-md-2 well text-center"><small><strong>Terbaca</strong> : <span class="badge badge-small">{{baca.data.length}}</span></small></div>
+								<div class="col-md-2 well text-center"><small><strong>Tidak Normal</strong> : <span class="badge badge-small">{{baca.tidaknormal}}</span></small></div>
+							</div>
+							<div class="row" data-ng-show="baca.data.length > 0">
+								<div class="col-md-10 col-md-offset-1">
+									<table class="table table-bordered table-condensed table-striped table-hover">
+										<thead>
+											<tr>
+												<th>JAM BACA</th>
+												<th>IDPEL</th>
+												<th>TARIF/DAYA</th>
+												<th>LWBP</th>
+												<th>WBP</th>
+												<th>KVARH</th>
+												<th>KETERANGAN</th>
+												<th>SUMBER</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in baca.data">
+												<td>{{c.jam}}</td>
+												<td><a data-ng-href="#/pelanggan/{{c.idpel}}/detail">{{c.idpel}}</a></td>
+												<td>{{c.tarif}}/{{c.daya}}</td>
+												<td>{{c.lwbp}}</td>
+												<td>{{c.wbp}}</td>
+												<td>{{c.kvarh}}</td>
+												<td><span data-ng-class="{ true: '', false: 'label label-danger' }[c.keterangan == 'Normal']">{{c.keterangan}}</span></td>
+												<td>{{c.kirim}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

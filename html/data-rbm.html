@@ -1,0 +1,97 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/0">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(2)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-5">
+									<div class="well" data-ng-show="needUnit()">
+										<form role="form" class="form-horizontal" name="formesm">
+											<div class="form-group">
+												<label for="e-unit" class="col-md-1 control-label">UNIT:</label>
+												<div class="col-md-4">
+													<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="rbm.unit">
+														<option value="0">-- pilih unit --</option>
+													</select>
+												</div>
+												<label for="e-keyword" class="col-md-1 control-label">RBM</label>
+												<div class="col-md-4">
+													<input type="text" name="keyword" id="e-keyword" class="form-control" data-ng-model="rbm.keyword" placeholder="nama rbm">
+												</div>
+												<div class="col-md-1">
+													<button class="btn btn-primary" data-ng-click="loadRbm()"><i class="fa fa-fw fa-search"></i></button>
+												</div>
+											</div>
+										</form>
+									</div>
+									<table class="table table-striped table-bordered table-condensed" data-ng-show="rbmList.length > 0">
+										<thead>
+											<tr>
+												<th>KODE RBM</th>
+												<th>HARI</th>
+												<th>PETUGAS</th>
+												<th>JUMLAH</th>
+												<th>DAYA</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in rbmList">
+												<td>{{c.nama}}</td>
+												<td>{{c.hari}}</td>
+												<td data-ng-hide="editing && row == $index"><span data-ng-class="{ 'label label-danger' : c.nama_petugas == 'UNSET' }">{{c.nama_petugas}}</span></td>
+												<td data-ng-show="editing && row == $index">
+													<select name="petugas" id="petugas" class="form-control" data-ng-model="c.petugas" data-ng-options="c.id as c.nama for c in petugasList">
+														<option value="">-- pilih petugas --</option>
+													</select>
+												</td>
+												<td>{{c.total}}</td>
+												<td>{{c.daya}}</td>
+												<td>
+													<a href="" class="btn btn-xs btn-default tooltips" data-ng-hide="editing && row == $index" title="ubah petugas" data-ng-click="setPetugas($index)"><i class="fa fa-user"></i></a>
+													<button class="btn btn-xs btn-primary tooltips" title="simpan petugas" data-ng-show="editing && row == $index" data-ng-click="updatePetugas($index)"><i class="fa fa-check"></i></button>
+													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" data-ng-show="c.total == '0'" delete-rbm="{{c.id}}"><i class="fa fa-trash-o"></i></a>
+													<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pager" data-ng-show="rbmList.length > 0">
+										<li data-ng-class="{ disabled: rbm.cpage == 0 }"><a href="" data-ng-click="setPrevious()" data-ng-disabled="rbm.cpage == 0"><span class="icon-prev"></span> Sebelumnya</a></li>
+										<li data-ng-class="{ disabled: rbm.cpage == rbm.numpage - 1 }"><a href="" data-ng-click="setNext()" data-ng-disabled="rbm.cpage == rbm.numpage - 1">Berikutnya <span class="icon-next"></span></a></li>
+									</ul>
+								</div>
+								<div class="col-md-7">
+									<h5 class="text-muted">
+										<i class="fa fa-fw fa-angle-right"></i> Peta RBM
+										<a href="" target="_blank" class="btn btn-warning btn-sm pull-right hide" id="export-map-btn"><i class="fa fa-fw fa-map-marker"></i> Ekspor Peta</a>
+									</h5>
+									<hr>
+									<div class="well">
+										<div id="map-container" class="map"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="spacer-h"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

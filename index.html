@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en" data-ng-app="abm" data-ng-controller="MainCtrl" id="abm"><head>
+	<meta charset="UTF-8">
+	<title>&phi;&gt; SABARA (Sistem Analisa Baca Meter Madura)</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/todc-bootstrap.min.css">
+	
+	<!-- css libs -->
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/tools.min.css">
+	
+	<!-- custom -->
+	<link rel="stylesheet" href="css/custom.css">
+	
+	<script src="js/jquery-1.10.2.min.js"></script>	
+	<script src="js/angular/angular.min.js"></script>
+</head>
+<body class="img-13">
+
+<!-- spinner -->
+<div class="main-loader">
+	<div class="spinner">
+		<div class="spinner-container container1">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+		<div class="spinner-container container2">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+		<div class="spinner-container container3">
+			<div class="circle1"></div>
+			<div class="circle2"></div>
+			<div class="circle3"></div>
+			<div class="circle4"></div>
+		</div>
+	</div>
+</div>
+
+<!-- error message -->
+<div class="main-loader" id="old-version">
+	<div class="md-content">
+		<h3><i class="fa fa-ban"></i> Versi Aplikasi Tidak Sesuai</h3>
+		<div>
+			<p>Mohon maaf.<br>Aplikasi tidak dapat digunakan karena versi yang Anda gunakan tidak sesuai.</p>
+			<hr>
+			<p>Kami selalu mengadakan perbaikan pada aplikasi yang Anda gunakan setiap saat. Untuk mendapatkan aplikasi versi yang terbaru Anda dapat mengunduhnya pada <em>link</em> berikut:</p>
+			<p><br><a href="{{server}}/update" class="btn btn-danger btn-lg">UNDUH APLIKASI</a></p>
+		</div>
+	</div>
+</div>
+
+<div class="v-ui transitioned v-scrollable"><div id="browser">
+	<a href="" id="link-download" target="_blank" class="hide"></a>
+	<header class="navbar navbar-masthead navbar-fixed-top" role="banner" data-ng-cloak>
+		<div class="container">
+			<div class="navbar-header" data-ng-show="getPath() == 'login'" data-ng-cloak>
+				<a href="" class="navbar-brand"><img src="img/logo-sm.png" alt="logo"> <strong>S A B A R A {{versi}}.{{subversi}}</strong></a>
+			</div>
+			<div class="navbar-header" data-ng-show="getPath() != 'login'" data-ng-cloak>
+				<a href="" class="navbar-brand"><img src="img/logo-sm.png" alt="logo"> <strong>{{user.username}}</strong> &mdash; {{user.nama_level}}</a>
+			</div>
+			<form class="navbar-form navbar-right" role="search" data-ng-show="getPath() != 'login'">
+				<button type="button" class="btn btn-link tooltips" data-placement="bottom" title="lihat sitemap" data-ng-click="toggleSitemap()"><i class="fa fa-sitemap"></i></button>
+				<button type="button" class="btn btn-link tooltips" data-placement="bottom" title="reload aplikasi" reload><i class="fa fa-refresh"></i></button>
+				<button type="button" class="btn btn-link tooltips" data-placement="bottom" title="ubah password" data-toggle="modal" data-target="#pass-modal"><i class="fa fa-cog"></i></button>
+				<button type="button" class="btn btn-link tooltips" data-placement="bottom" title="keluar aplikasi" data-ng-click="disconnect()"><i class="fa fa-sign-out"></i></button>
+			</form>
+		</div>
+	</header>
+	<div class="container" id="content" data-ng-cloak data-ng-view></div>
+	
+	<!-- sitemap -->
+	<div class="container-fluid sample-show-hide" id="sitemap" data-ng-show="showSitemap" data-ng-cloak>
+		<div class="container" data-ng-include="'html/menu-sitemap.html'"></div>
+	</div>
+</div></div>
+
+<div class="modal fade" id="pass-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Ubah Password</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-12">
+							<form class="form-horizontal" role="form" name="formpass" novalidate>
+								<div class="form-group">
+									<label for="formpass-password" class="col-md-3 col-md-offset-1 control-label">PASSWORD:</label>
+									<div class="col-md-4">
+										<input type="password" name="password" id="formpass-password" class="form-control" data-ng-model="passtoedit.pass1" placeholder="password" data-ng-minlength="6" required>
+									</div>
+									<div class="col-md-4">
+										<span class="help-block text-muted"><em><small>minimal 6 karakter</small></em></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="formpass-password2" class="col-md-3 col-md-offset-1 control-label">PASSWORD:</label>
+									<div class="col-md-4">
+										<input type="password" name="password2" id="formpass-password2" class="form-control" data-ng-model="passtoedit.pass2" placeholder="ulangi password" data-ng-minlength="6" required>
+									</div>
+									<div class="col-md-4">
+										<span class="help-block text-muted"><em><small>ketik ulang password</small></em></span>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button> 
+				<button type="button" class="btn btn-primary" save-password>Simpan Data</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- google maps --->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA12ALSzcALOC1PcuPztGjNcWqsHHURAUE&sensor=false"></script>
+
+<!-- jquery, bootstrap and angular -->
+
+<script src="js/underscore.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/angular/angular-animate.min.js"></script>
+<script src="js/angular/angular-cookies.min.js"></script>
+<script src="js/angular/angular-loader.min.js"></script>
+<script src="js/angular/angular-route.min.js"></script>
+
+<!-- helper dan tools -->
+<script src="js/helper.min.js"></script>
+<script src="js/tools.min.js"></script>
+
+<!-- higcharts -->
+<script src="js/highcharts/highcharts.js"></script>
+<script src="js/highcharts/modules/exporting.js"></script>
+
+<!-- angular app, controller and directives -->
+<script src="js/custom/app.js"></script>
+
+<!--
+<script src="js/custom/directives.min.js"></script>
+<script src="js/custom/controllers.min.js"></script>
+-->
+
+<script src="js/custom/directive.js"></script>
+<script src="js/custom/directive-form.js"></script>
+<script src="js/custom/main-ctrl.js"></script>
+<script src="js/custom/data-ctrl.js"></script>
+<script src="js/custom/meter-ctrl.js"></script>
+<script src="js/custom/user-ctrl.js"></script>
+<script src="js/custom/analisa-ctrl.js"></script>
+<script src="js/custom/cetak-ctrl.js"></script>
+<script src="js/custom/pelanggan-ctrl.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li class="active">{{menu[submenu].title}}</li>
+		</ol>
+	</div>
+</div>
+
+<div class="box-container">
+	<div data-ng-repeat="i in menu[submenu].item" class="menu-list" data-ng-show="menuShow(i.user, user.id_level)">
+		<a data-ng-href="{{i.url}}"><i class="fa fa-fw fa-angle-right"></i> {{i.title}}</a>
+	</div>
+	<hr>
+	<a href="#/home"><small><i class="fa fa-fw fa-angle-left"></i> Kembali<i class="fa fa-fw fa-angle-left"></i></small></a>
+</div>

@@ -1,0 +1,87 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(3)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="spacer-h"></div>
+									<table class="table table-striped table-condensed table-hover table-bordered" data-ng-show="adminList.length > 0">
+										<thead>
+											<tr>
+												<th>USERNAME</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in adminList">
+												<td>{{c.username}}</td>
+												<td>
+													<a href="" class="btn btn-xs btn-info tooltips" title="ubah password" data-ng-click="setAdmin($index, 'password')"><i class="fa fa-key"></i></a>
+													<a href="" class="btn btn-xs btn-default tooltips" title="sunting" data-ng-click="setAdmin($index, 'edit')"><i class="fa fa-pencil"></i></a>
+													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" delete-admin="{{c.id}}" data-placement="left"><i class="fa fa-trash-o"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-6">
+									<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Tambah / Sunting Observer</h5>
+									<hr>
+									<form class="form-horizontal" role="form" name="formap" novalidate>
+										<div class="form-group" data-ng-show="modeAdmin == 'edit' || modeAdmin == 'show'">
+											<label for="username" class="col-md-3 control-label">USERNAME:</label>
+											<div class="col-md-4">
+												<input type="text" name="username" id="username" class="form-control" data-ng-model="admin.username" placeholder="username" data-ng-minlength="4" required>
+											</div>
+											<div class="col-md-4">
+												<span class="help-block text-muted"><em><small>harus unik, untuk login</small></em></span>
+											</div>
+										</div>
+										<div class="form-group" data-ng-show="modeAdmin == 'password' || modeAdmin == 'show'">
+											<label for="password" class="col-md-3 control-label">PASSWORD:</label>
+											<div class="col-md-4">
+												<input type="password" name="password" id="password" class="form-control" data-ng-model="admin.password" placeholder="password" data-ng-minlength="6" required>
+											</div>
+											<div class="col-md-4">
+												<span class="help-block text-muted"><em><small>minimal 6 karakter</small></em></span>
+											</div>
+										</div>
+										<div class="form-group" data-ng-show="modeAdmin == 'password'">
+											<label for="password2" class="col-md-3 control-label">PASSWORD:</label>
+											<div class="col-md-4">
+												<input type="password" name="password2" id="password2" class="form-control" data-ng-model="admin.password2" placeholder="ulangi password" data-ng-minlength="6" required>
+											</div>
+											<div class="col-md-4">
+												<span class="help-block text-muted"><em><small>ketik ulang password</small></em></span>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-6 col-md-offset-3">
+												<button class="btn btn-primary" save-admin>Simpan Data</button> 
+												<button class="btn btn-default" data-ng-click="resetAdmin()">Batal</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

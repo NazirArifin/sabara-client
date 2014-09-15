@@ -1,0 +1,266 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/2">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(1)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<ul class="nav nav-tabs nav-tabs-google">
+							<li class="active"><a href="" data-toggle="tab" data-target="#tab-koreksi"><i class="fa fa-fw fa-edit fa-lg"></i> KOREKSI STAND</a></li>
+							<li><a href="" data-toggle="tab" data-target="#tab-entry"><i class="fa fa-fw fa-save fa-lg"></i> ENTRY STAND</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane fade in active" id="tab-koreksi">
+								<div class="padd">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-8 col-md-offset-2">
+												<div class="well">
+													<form role="form" class="form-horizontal" name="formk">
+														<div class="form-group">
+															<label for="k-idpel" class="col-md-2 control-label">IDPEL:</label>
+															<div class="col-md-3">
+																<input type="text" name="idpel" id="k-idpel" class="form-control" number-input data-ng-model="koreksi.idpel" maxlength="12">
+															</div>
+															<label for="k-nometer" class="col-md-2 control-label">NOMETER:</label>
+															<div class="col-md-3">
+																<input type="text" name="nometer" id="k-nometer" class="form-control" data-ng-model="koreksi.nometer">
+															</div>
+														</div>
+														<div class="form-group">
+															<div class="col-md-3 col-md-offset-2">
+																<button class="btn btn-primary" id="search-stand-koreksi" search-stand-koreksi><i class="fa fa-fw fa-search"></i> Tampilkan</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row" data-ng-show="plggn.idpel != ''">
+											<div class="col-md-8">
+												<form role="form" class="form-horizontal" name="formis">
+													<div class="form-group">
+														<label for="k2-idpel" class="col-md-3 control-label">IDPEL / NAMA</label>
+														<div class="col-md-3"><input type="text" name="idpel" id="k2-idpel" class="form-control" data-ng-model="plggn.idpel" disabled></div>
+														<div class="col-md-6"><input type="text" name="nama" id="k2-nama" class="form-control" data-ng-model="plggn.nama" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="k2-alamat" class="col-md-3 control-label">ALAMAT</label>
+														<div class="col-md-9"><input type="text" name="alamat" id="k2-alamat" class="form-control" data-ng-model="plggn.alamat" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="k2-tarif" class="col-md-3 control-label">TARIF / DAYA / GARDU <em class="text-muted">*</em></label>
+														<div class="col-md-2"><input type="text" class="form-control" id="k2-tarif" data-ng-model="plggn.tarif" disabled></div>
+														<div class="col-md-2"><input type="text" class="form-control" id="k-daya" data-ng-model="plggn.daya" disabled></div>
+														<div class="col-md-2"><input type="text" class="form-control" id="k-gardu" data-ng-model="plggn.gardu"></div>
+													</div>
+													<div class="form-group">
+														<label for="k2-latd" class="col-md-3 control-label"><span class="tooltips" title="Latitude">LATD</span> / <span class="tooltips" title="Longitude">LONGTD</span> <em class="text-muted">*</em></label>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-latd" data-ng-model="plggn.latitude" number-input placeholder="0,00"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k-longtd" data-ng-model="plggn.longitude" number-input placeholder="0,00"></div>
+													</div>
+													<div class="form-group">
+														<label for="" class="col-md-3 control-label">&nbsp;</label>
+														<div class="col-md-3"><strong class="label label-warning">LALU</strong></div>
+														<div class="col-md-3"><strong class="label label-warning">INI</strong></div>
+														<div class="col-md-3"><strong class="label label-warning">PMK KWH</strong></div>
+													</div>
+													<div class="form-group">
+														<label for="k2-lwbp2" class="col-md-3 control-label">LWBP</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-lwbp1" data-ng-model="plggn.lwbp0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-lwbp2" data-ng-model="plggn.lwbp" maxlength="10" number-input placeholder="0,00" count-stand-koreksi="lwbp"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-lwbp3" data-ng-model="plggn.plwbp" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group" data-ng-show="isGanda(plggn.tarif, plggn.daya)">
+														<label for="k2-wbp2" class="col-md-3 control-label">WBP</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-wbp1" data-ng-model="plggn.wbp0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-wbp2" data-ng-model="plggn.wbp" maxlength="10" number-input placeholder="0,00" count-stand-koreksi="wbp"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-wbp3" data-ng-model="plggn.pwbp" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group" data-ng-show="isGanda(plggn.tarif, plggn.daya)">
+														<label for="k2-kvarh2" class="col-md-3 control-label">kVARh</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-kvarh1" data-ng-model="plggn.kvarh0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-kvarh2" data-ng-model="plggn.kvarh" maxlength="10" number-input placeholder="0,00" count-stand-koreksi="kvarh"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="k2-kvarh3" data-ng-model="plggn.pkvarh" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="k2-ketbc" class="col-md-3 control-label">LBKB</label>
+														<div class="col-md-6">
+															<select name="ketbc" id="e2-ketbc" class="form-control" style="width: 100%" data-ng-options="c.id as c.nama for c in ketbaca" data-ng-model="plggn.ketbaca">
+																<option value="">Normal</option>
+															</select>
+														</div>
+													</div>
+													<hr>
+													<div><em class="text-muted"><small>* biarkan kosong bila tidak ada</small></em></div>
+													<div class="form-group">
+														<div class="col-md-8 col-md-offset-3">
+															<button class="btn btn-primary" id="save-stand-koreksi" save-stand-koreksi>Simpan Data</button> 
+															<button class="btn btn-default" data-ng-click="resetPlggn()">Batal</button>
+														</div>
+													</div>
+												</form>
+											</div>
+											<div class="col-md-4">
+												<img data-ng-src="{{server}}/{{plggn.foto}}" alt="foto" class="img-rounded img-thumbnail" data-target="{{server}}/{{plggn.foto}}" image-preview style="width: 100%; cursor: pointer;" id="img-preview">
+												<br>
+												<span class="btn btn-success pull-right btn-file tooltips" title="pilih file foto"><i class="fa fa-fw fa-lg fa-picture-o"></i> Ubah Foto<input type="file" name="file" file-input-preview="#img-preview" accept="image/*"></input></span>
+												<button class="btn btn-default pull-right">Batal</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="tab-pane fade" id="tab-entry">
+								<div class="padd">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-md-8 col-md-offset-2">
+												<p class="alert alert-info text-center"><strong>Pilih salah satu antara RBM, IDPEL, atau NOMETER</strong><br>Sebaiknya Anda menggunakan menu <a href="#/meter/impor">Impor Pembacaan Meter</a> menggunakan file ekspor dari HP</p>
+												<div class="well">
+													<form role="form" class="form-horizontal" name="formesm">
+														<div class="form-group">
+															<label for="e-unit" class="col-md-2 control-label" data-ng-show="needUnit()">UNIT:</label>
+															<div class="col-md-3" data-ng-show="needUnit()">
+																<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="entry.unit" data-ng-change="loadRBM()">
+																	<option value="0">-- pilih unit --</option>
+																</select>
+															</div>
+															<label for="e-rbm" class="col-md-2 control-label">RBM:</label>
+															<div class="col-md-3">
+																<select name="rbm" id="e-rbm" class="form-control" data-ng-model="entry.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+																	<option value="">-- pilih rbm --</option>
+																</select>
+															</div>
+														</div>
+														<div class="form-group">
+															<label for="e-idpel" class="col-md-2 control-label">IDPEL:</label>
+															<div class="col-md-3">
+																<input type="text" name="idpel" id="e-idpel" class="form-control" number-input data-ng-model="entry.idpel" maxlength="12">
+															</div>
+															<label for="e-nometer" class="col-md-2 control-label">NOMETER:</label>
+															<div class="col-md-3">
+																<input type="text" name="nometer" id="e-nometer" class="form-control" data-ng-model="entry.nometer">
+															</div>
+														</div>
+														<div class="form-group">
+															<div class="col-md-3 col-md-offset-2">
+																<button class="btn btn-primary" id="search-stand" search-stand><i class="fa fa-fw fa-search"></i> Tampilkan</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-4" data-ng-show="pelangganList.length > 0">
+												<h5 class="text-muted">DATA PELANGGAN RBM</h5><hr>
+												<!--<p class="alert alert-info alert-block" data-ng-show="standList.length == 0">
+													<i class="fa fa-fw fa-warning"></i> ISI FORM PENCARIAN RBM UNTUK MENAMPILKAN DATA
+												</p>-->
+												<div class="meter-dc scrollable" style="max-height: 450px;" data-ng-show="pelangganList.length > 0">
+													<table class="table table-condensed table-bordered table-striped">
+														<thead>
+															<tr>
+																<th>IDPEL</th>
+																<th>NAMA</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr data-ng-repeat="c in pelangganList">
+																<td><a href="" load-pelanggan="{{c.idpel}}">{{c.idpel}}</a></td>
+																<td><a href="" load-pelanggan="{{c.idpel}}">{{c.nama}}</a></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+											<div class="col-md-8" data-ng-class="{ 'col-md-offset-2': pelanggan.idpel != '' && pelangganList.length == 0 }" data-ng-show="pelanggan.idpel != ''">
+												<h5 class="text-muted">INPUT STAND METER</h5><hr>
+												<!--<p class="alert alert-info alert-block" data-ng-show="pelanggan.idpel == ''">
+													<i class="fa fa-fw fa-warning"></i> PILIH IDPEL UNTUK MENGISIKAN STAND METER PELANGGAN
+												</p>-->
+												<form role="form" class="form-horizontal" name="formis">
+													<div class="form-group">
+														<label for="e2-idpel" class="col-md-3 control-label">IDPEL / NAMA</label>
+														<div class="col-md-3"><input type="text" name="idpel" id="e2-idpel" class="form-control" data-ng-model="pelanggan.idpel" disabled></div>
+														<div class="col-md-6"><input type="text" name="nama" id="e2-nama" class="form-control" data-ng-model="pelanggan.nama" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="e2-alamat" class="col-md-3 control-label">ALAMAT</label>
+														<div class="col-md-9"><input type="text" name="alamat" id="e2-alamat" class="form-control" data-ng-model="pelanggan.alamat" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="e2-tarif" class="col-md-3 control-label">TARIF / DAYA / GARDU <em class="text-muted">*</em></label>
+														<div class="col-md-2"><input type="text" class="form-control" id="e2-tarif" data-ng-model="pelanggan.tarif" disabled></div>
+														<div class="col-md-2"><input type="text" class="form-control" id="e-daya" data-ng-model="pelanggan.daya" disabled></div>
+														<div class="col-md-2"><input type="text" class="form-control" id="e-gardu" data-ng-model="pelanggan.gardu"></div>
+													</div>
+													<div class="form-group">
+														<label for="e2-latd" class="col-md-3 control-label"><span class="tooltips" title="Latitude">LATD</span> / <span class="tooltips" title="Longitude">LONGTD</span> <em class="text-muted">*</em></label>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-latd" data-ng-model="pelanggan.latitude" number-input placeholder="0,00"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e-longtd" data-ng-model="pelanggan.longitude" number-input placeholder="0,00"></div>
+													</div>
+													<div class="form-group">
+														<label for="" class="col-md-3 control-label">&nbsp;</label>
+														<div class="col-md-3"><strong class="label label-warning">LALU</strong></div>
+														<div class="col-md-3"><strong class="label label-warning">INI</strong></div>
+														<div class="col-md-3"><strong class="label label-warning">PMK KWH</strong></div>
+													</div>
+													<div class="form-group">
+														<label for="" class="col-md-3 control-label">LWBP</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-lwbp1" data-ng-model="pelanggan.lwbp0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-lwbp2" data-ng-model="pelanggan.lwbp" maxlength="10" number-input placeholder="0,00" count-stand="lwbp"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-lwbp3" data-ng-model="pelanggan.plwbp" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group" data-ng-show="isGanda(pelanggan.tarif, pelanggan.daya)">
+														<label for="" class="col-md-3 control-label">WBP</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-wbp1" data-ng-model="pelanggan.wbp0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-wbp2" data-ng-model="pelanggan.wbp" maxlength="10" number-input placeholder="0,00" count-stand="wbp"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-wbp3" data-ng-model="pelanggan.pwbp" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group" data-ng-show="isGanda(pelanggan.tarif, pelanggan.daya)">
+														<label for="" class="col-md-3 control-label">kVARh</label>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-kvarh1" data-ng-model="pelanggan.kvarh0" disabled></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-kvarh2" data-ng-model="pelanggan.kvarh" maxlength="10" number-input placeholder="0,00" count-stand="kvarh"></div>
+														<div class="col-md-3"><input type="text" class="form-control" id="e2-kvarh3" data-ng-model="pelanggan.pkvarh" maxlength="10" disabled></div>
+													</div>
+													<div class="form-group">
+														<label for="e2-ketbc" class="col-md-3 control-label">LBKB</label>
+														<div class="col-md-6">
+															<select name="ketbc" id="e2-ketbc" class="form-control" style="width: 100%" data-ng-options="c.id as c.nama for c in ketbaca" data-ng-model="pelanggan.ketbaca">
+																<option value="">Normal</option>
+															</select>
+														</div>
+													</div>
+													<hr>
+													<div><em class="text-muted"><small>* biarkan kosong bila tidak ada</small></em></div>
+													<div class="form-group">
+														<div class="col-md-8 col-md-offset-3">
+															<button class="btn btn-primary" id="save-entry-stand" save-entry-stand>Simpan Data</button> 
+															<button class="btn btn-default" data-ng-click="resetPelanggan()">Batal</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/2">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(3)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> UNGGAH FOTO PEMBACAAN</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<div class="text-center well">
+										<iframe id="hidden_upload" name="hidden_upload" id="iframe-upload" src="" width="0" height="0" style="width:0; height:0; display: none;"></iframe>
+										<form action="#" id="form-upload" method="post" enctype="multipart/form-data" target="hidden_upload" class="form-inline text-center">
+											<div class="form-group">
+												<span class="btn btn-info btn-file tooltips" title="pilih file foto"><i class="fa fa-fw fa-picture-o fa-lg"></i> Pilih File Foto<input type="file" name="file[]" id="file-foto" multiple file-input accept=".zip,image/*"></input></span>
+												<input type="submit" class="btn btn-danger" save-foto></input>
+											</div>
+										</form>
+										<!--
+										<iframe src="" name="upload_iframe" id="upload-iframe" frameborder="0" width="0" height="0"></iframe>
+										<form method="post" id="form-upload" data-ng-action="{{server}}/foto" enctype="multipart/form-data" class="form-inline text-center" role="form" name="formnpde" target="upload_iframe">
+											<div class="form-group">
+												<span class="btn btn-info btn-file tooltips" title="pilih file foto"><i class="fa fa-fw fa-picture-o fa-lg"></i> Pilih File Foto<input type="file" name="file" id="file-foto" multiple file-input accept=".zip,image/*"></input></span>
+											</div>
+											<button type="submit" class="btn btn-danger" save-foto><i class="fa fa-flash fa-lg"></i> Proses File</button>
+										</form>
+										-->
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-6 col-md-offset-3">
+									<p class="alert alert-info alert-block">
+										<i class="fa fa-fa pull-left fa-3x fa-info-circle"></i> &bull; Anda dapat memilih beberapa file sekaligus saat melakukan pengunggahan.<br>
+										&bull; Beberapa file gambar yang akan diunggah dapat Anda <code>zip</code> dalam satu file.<br>
+										&bull; Total ukuran file tidak boleh melebihi <code>128 MB</code>.<br><br>
+										&bull; <strong>PERINGATAN: File dengan nama sama tertindih otomatis, pastikan <a href="#/meter/blth">bulan tahun aktif</a> sudah benar</strong>
+									</p>
+									<hr>
+									<table class="table table-striped" data-ng-hide="numfiles == ''">
+										<thead>
+											<tr>
+												<th colspan="2" class="text-center">REKAPITULASI PENGUNGGAHAN</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Total Data Terunggah</td>
+												<td>: <strong class="label label-danger">{{numfiles}}</strong> file foto</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-md-12">
+									<div class="spacer-h"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

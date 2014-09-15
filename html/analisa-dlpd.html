@@ -1,0 +1,108 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(1)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-3">
+						<h6 class="text-info"><strong><i class="fa fa-fw fa-angle-right"></i> DATA DLPD</strong></h6><br>
+						<form role="form" class="form-inline">
+						<div class="list-group">
+							<p class="list-group-item" data-ng-repeat="c in dlpd">
+								<label><input type="checkbox" name="dlpd[]" data-ng-model="checked[$index]">&nbsp; {{c.kode}}. {{c.nama}}</label>
+							</p>
+						</div>
+						</form>
+					</div>
+					<div class="col-md-9">
+						<h6 class="text-info"><strong><i class="fa fa-fw fa-angle-right"></i> PILIH BLTH DAN UNIT</strong></h6><br>
+						<form role="form" class="form-horizontal well" name="formhitung">
+							<div class="form-group">
+								<label for="h-blth" class="col-md-1 control-label">BLTH:</label>
+								<div class="col-md-2">
+									<select name="blth"id="dlpd-blth" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="adlpd.blth"></select>
+								</div>
+								<label for="h-unit" class="col-md-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+								<div class="col-md-3" data-ng-show="needUnit()">
+									<select name="unit" id="dlpd-unit" class="select2" style="width: 90%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="adlpd.unit" data-ng-change="loadRBM()">
+										<option value="0">-- pilih unit --</option>
+									</select>
+								</div>
+								<label for="h-rbm" class="col-md-1 control-label">RBM:</label>
+								<div class="col-md-2">
+									<select name="rbm" id="lbkb-rbm" class="form-control" data-ng-model="adlpd.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+										<option value="">-- pilih rbm --</option>
+									</select>
+								</div>
+								<div class="col-md-1"><button class="btn btn-primary" data-ng-click="loadDLPD()"><i class="fa fa-fw fa-search"></i></button></div>
+							</div>
+						</form>
+						<div class="show-result" data-ng-show="dlpdList.length > 0">
+							<hr>
+							<h6 class="text-info">
+								<strong>&nbsp;</strong>
+								<a data-ng-href="{{server}}/excel/dlpd?{{getParam()}}" class="btn btn-success pull-right btn-xs"><i class="fa fa-fw fa-save fa-lg"></i></a>
+							</h6>
+							<br>
+							<div class="meter-dc scrollable" style="max-height: 400px;">
+								<table class="table table-bordered table-condensed table-striped" style="width: 1200px;">
+									<thead>
+										<tr>
+											<th rowspan="2" class="vtop">DLPD</th>
+											<th rowspan="2" class="vtop">IDPEL</th>
+											<th rowspan="2" class="vtop">NAMA</th>
+											<th rowspan="2" class="vtop">T/D</th>
+											<th rowspan="2" class="vtop">KODUK</th>
+											<th colspan="2">LWBP</th>
+											<th colspan="2">WBP</th>
+											<th colspan="2">KVARH</th>
+											<th rowspan="2" class="vtop">KWH</th>
+											<th rowspan="2" class="vtop">JAM NYALA</th>
+											<th rowspan="2" class="vtop">LBKB</th>
+										</tr>
+										<tr>
+											<th>LALU</th>
+											<th>INI</th>
+											<th>LALU</th>
+											<th>INI</th>
+											<th>LALU</th>
+											<th>INI</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr data-ng-repeat="c in dlpdList">
+											<td><strong class="tooltips text-danger" title="{{c.dlpd}}">{{c.kodedlpd}}</strong></td>
+											<td>{{c.idpel}}</td>
+											<td>{{c.nama}}</td>
+											<td>{{c.tarif}}/{{c.daya}}</td>
+											<td>{{c.koduk}}</td>
+											<td>{{c.lwbp0}}</td>
+											<td>{{c.lwbp}}</td>
+											<td>{{c.wbp0}}</td>
+											<td>{{c.wbp}}</td>
+											<td>{{c.kvarh0}}</td>
+											<td>{{c.kvarh}}</td>
+											<td>{{c.kwh}}</td>
+											<td>{{c.jam}}</td>
+											<td>{{c.lbkb}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="spacer-h"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

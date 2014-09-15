@@ -1,0 +1,107 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<div class="well">
+							<form role="form" class="form-horizontal" name="formcdpm">
+								<div class="form-group">
+									<label for="dpm-unit" class="col-md-1 col-md-offset-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+									<div class="col-md-3" data-ng-show="needUnit()">
+										<select name="unit" id="dpm-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="dpm.unit" data-ng-change="loadRBM()">
+											<option value="0">-- pilih unit --</option>
+										</select>
+									</div>
+									<label for="dpm-rbm" class="col-md-1 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">RBM:</label>
+									<div class="col-md-3">
+										<select name="rbm" id="dpm-rbm" class="form-control" data-ng-model="dpm.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+											<option value="">-- pilih rbm --</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="dpm-blth" class="col-md-1 col-md-offset-1 control-label">BLTH:</label>
+									<div class="col-md-3">
+										<select name="blth" id="dpm-blth" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="dpm.blth"></select>
+									</div>
+									<div class="col-md-5">
+										<button class="btn btn-primary" data-ng-click="loadDPM()"><i class="fa fa-fw fa-search"></i> Tampilkan</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12" data-ng-show="dpmList.length > 0">
+						<h6 class="text-info"><strong>DATA DPM</strong>
+							<div class="pull-right">
+								<button class="btn btn-info btn-sm tooltips" title="cetak" print-popup data-target="{{server}}/print/dpm?{{getParam()}}"><i class="fa fa-fw fa-print fa-lg"></i></button>
+								<a data-ng-href="{{server}}/excel/dpm?{{getParam()}}" class="btn btn-success btn-sm tooltips" title="ekspor ke excel"><i class="fa fa-fw fa-save fa-lg"></i></a>
+							</div>
+						</h6>
+						<div class="spacer-h"></div>
+						<div class="meter-dc scrollable" style="min-height: 550px;">
+							<table class="table table-bordered table-condensed" style="width: 1200px;">
+								<thead>
+									<tr>
+										<th class="vtop" rowspan="2">RBM</th>
+										<th class="vtop" rowspan="2">IDPEL</th>
+										<th class="vtop" rowspan="2">NAMA</th>
+										<th class="vtop" rowspan="2">ALAMAT</th>
+										<th class="vtop" rowspan="2">KODUK</th>
+										<th class="vtop" rowspan="2">GARDU</th>
+										<th class="vtop" rowspan="2">TARIF</th>
+										<th class="vtop" rowspan="2">DAYA</th>
+										<th class="vtop" colspan="2">LWBP</th>
+										<th class="vtop" colspan="2">WBP</th>
+										<th class="vtop" colspan="2">KVARH</th>
+									</tr>
+									<tr>
+										<th>LALU</th>
+										<th>INI</th>
+										<th>LALU</th>
+										<th>INI</th>
+										<th>LALU</th>
+										<th>INI</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="c in dpmList" data-ng-class="{ danger: c.lwbp == '0,00' }">
+										<td>{{c.rbm}}</td>
+										<td>{{c.idpel}}</td>
+										<td>{{c.nama}}</td>
+										<td>{{c.alamat}}</td>
+										<td>{{c.koduk}}</td>
+										<td>{{c.gardu}}</td>
+										<td>{{c.tarif}}</td>
+										<td>{{c.daya}}</td>
+										<td>{{c.lwbp0}}</td>
+										<td>{{c.lwbp}}</td>
+										<td>{{c.wbp0}}</td>
+										<td>{{c.wbp}}</td>
+										<td>{{c.kvarh0}}</td>
+										<td>{{c.kvarh}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="spacer-h"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

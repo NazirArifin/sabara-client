@@ -1,0 +1,79 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/0">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(3)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> IMPOR NPDE  {{getUnit()|uppercase}}</h4>
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<div class="text-center well">
+										<p class="alert alert-info alert-block">Mohon pastikan Data NPDE sudah valid!. Periksa kembali panjang <em>field</em> sudah benar dan nama file tidak diubah sejak diterima dari PLN.<br><strong>Kesalahan karena file NPDE yang tidak valid dapat merusak data keseluruhan. Anda sudah diperingatkan.</strong><br>Ukuran file maksimal 6 MB, Anda dapat men-<code>ZIP</code> file untuk memperkecil ukuran dengan nama file <code>zip</code> sama dengan nama file NPDE.</p>
+										<form class="form-inline" role="form" name="formnpde" class="text-center">
+											<div class="form-group">
+												<span class="btn btn-success btn-file tooltips" title="pilih file npde"><i class="fa fa-fw fa-paste"></i> Pilih File NPDE<input type="file" name="file" file-input accept=".txt,.csv,,.zip"></input></span>
+											</div>
+											<div class="form-group">
+												<select name="tipe" class="form-control" style="width: 150px" data-ng-model="impor.tipe">
+													<option value="1" selected>Pasca Bayar</option>
+													<option value="2">Pra Bayar</option>
+												</select>
+											</div>
+											<button type="button" class="btn btn-primary" save-npde><i class="fa fa-flash fa-lg"></i> Proses File</button>
+										</form>
+									</div>
+								</div>
+							</div>
+							<div class="row" data-ng-show="progress == 0 && result.unit != ''">
+								<div class="col-md-8 col-md-offset-2">
+									<h5 class="text-center">File Berhasil Diproses</h5>
+									<table class="table table-bordered table-condensed table-striped">
+										<tbody>
+											<tr>
+												<td>UNIT</td>
+												<td>: {{result.unit}}</td>
+											</tr>
+											<!--<tr>
+												<td>KD PROSES</td>
+												<td>: {{result.tipe}}</td>
+											</tr>-->
+											<tr>
+												<td>BLTH</td>
+												<td>: {{result.blth}}</td>
+											</tr>
+											<tr>
+												<td>JUMLAH</td>
+												<td>: {{result.jumlah}}</td>
+											</tr>
+											<tr>
+												<td>FILE</td>
+												<td>: {{result.file}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="spacer-h"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,74 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/0">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="spacer-h"></div>
+									<table class="table table-striped table-bordered table-condensed">
+										<thead>
+											<tr>
+												<th>NO.</th>
+												<th>KODE UNIT</th>
+												<th>NAMA UNIT</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in unitList">
+												<td>{{$index + 1}}.</td>
+												<td>{{c.kode}}</td>
+												<td>{{c.nama}}</td>
+												<td>
+													<a href="" class="btn btn-xs btn-default tooltips" title="sunting" data-ng-click="setUnit($index)"><i class="fa fa-pencil"></i></a>
+													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" delete-unit="{{c.id}}"><i class="fa fa-trash-o"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-4">
+									<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Tambah / Sunting Unit</h5>
+									<hr>
+									<form class="form-horizontal" role="form" name="formu">
+										<div class="form-group">
+											<label for="kode" class="col-md-3 control-label">Kode:</label>
+											<div class="col-md-5">
+												<input type="text" name="kode" id="kode" class="form-control" data-ng-model="unit.kode">	
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="" class="col-md-3 control-label">Nama:</label>
+											<div class="col-md-6">
+												<input type="text" name="nama" id="nama" class="form-control" data-ng-model="unit.nama">
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-6 col-md-offset-3">
+												<button class="btn btn-primary" save-unit>Simpan</button> 
+												<button class="btn btn-default" data-ng-click="resetUnit()">Batal</button>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

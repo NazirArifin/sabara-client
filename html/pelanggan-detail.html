@@ -1,0 +1,150 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-5">
+									<a href="#/pelanggan/data" class="btn btn-primary btn-block btn-lg tooltips" title="kembali ke data"><i class="fa fa-fw fa-user"></i> Data Pelanggan</a>
+									<div class="spacer-h"></div>
+									<table class="table table-striped table-hover">
+										<tbody>
+											<tr>
+												<td class="text-info"><strong>IDPEL</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.id}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>NAMA</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.nama}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>KODE PROSES</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.kodeproses}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>GARDU</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.gardu}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>KODUK</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.koduk}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>RBM</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.rbm}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>TARIF</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.tarif}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>DAYA</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.daya}}</strong></td>
+											</tr>
+											<tr>
+												<td class="text-info"><strong>ALAMAT</strong></td>
+												<td>:</td>
+												<td><strong>{{detail.alamat}}</strong></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<div class="col-md-7">
+									<div class="well">
+										<div data-ng-switch on="detail.koordinat.length > 0">
+											<p class="alert alert-danger alert-block text-center" data-ng-switch-when="false">
+												<span class="fa-stack fa-lg">
+													<i class="fa fa-2x fa-map-marker fa-stack-1x"></i>
+													
+												</span>
+												<strong>MAAF, PETA TIDAK TERSEDIA KARENA PELANGGAN TIDAK MEMILIKI KOORDINAT</strong>
+											</p>
+											<div data-ng-switch-when="true">
+												<map zoom="13" center="{{detail.koordinat}}" style="display: block; width: 100%; height: 350px;">
+													<marker position="{{detail.koordinat}}" title="pelanggan" animation="Animation.BOUNCE"></marker>
+												</map>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info">&nbsp;
+							<a href="" class="btn btn-success btn-xs" data-ng-show="!showHistory" data-ng-click="toggleHistory()"><i class="fa fa-bar-chart-o fa-fw"></i> Lihat Histori</a>
+							<a href="" class="btn btn-danger btn-xs" data-ng-show="showHistory" data-ng-click="toggleHistory()"><i class="fa fa-ban text-danger"></i> Sembunyikan Histori</a>
+							
+							<a data-ng-href="{{server}}/excel/pelanggan/{{getId()}}" class="btn btn-success btn-xs pull-right tooltips" title="ekspor ke excel" data-ng-show="showHistory"><i class="fa fa-save fa-fw fa-lg"></i></a>
+						</h4>
+						<div class="container-fluid" data-ng-show="showHistory">
+							<div class="row">
+								<div class="col-md-12">
+									<table class="table table-bordered table-condensed table-striped table-hover">
+										<thead>
+											<tr>
+												<th>TANGGAL</th>
+												<th>BLTH</th>
+												<th>LWBP</th>
+												<th>WBP</th>
+												<th>KVARH</th>
+												<th>LBKB</th>
+												<th>KWH</th>
+												<th>JAM NYALA</th>
+												<th>DLPD</th>
+												<th>FOTO METER</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in historyList">
+												<td>{{c.tanggal}}</td>
+												<td>{{c.blth}}</td>
+												<td>{{c.lwbp}}</td>
+												<td>{{c.wbp}}</td>
+												<td>{{c.kvarh}}</td>
+												<td><span class="tooltips text-info" title="{{c.lbkb}}">{{c.kodelbkb}}</span></td>
+												<td>{{c.kwh}}</td>
+												<td>{{c.jam}}</td>
+												<td><span class="tooltips text-info" title="{{c.dlpd}}">{{c.kodedlpd}}</span></td>
+												<td><a href="" data-target="{{server}}/img/{{detail.id}}/{{c.blth}}" image-preview><img data-ng-src="{{server}}/img/{{detail.id}}/{{c.blth}}?thumb" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pagination pagination-sm">
+										<li data-ng-class="{ disabled: history.cpage == 0 }"><a href="" data-ng-click="prevPage()">&laquo;</a></li>
+										<li data-ng-repeat="n in range(history.numpage)" data-ng-class="{ active: n == history.cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n + 1">1</a></li>
+										<li data-ng-class="{ disabled: history.cpage == history.numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="spacer-h"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

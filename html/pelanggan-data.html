@@ -1,0 +1,89 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<div class="well">
+							<form role="form" class="form-horizontal" novalidate>
+								<div class="form-group">
+									<label for="data-unit" class="col-md-1 col-md-offset-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+									<div class="col-md-3" data-ng-show="needUnit()">
+										<select name="unit" id="data-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="datapel.unit">
+											<option value="0">-- pilih unit --</option>
+										</select>
+									</div>
+									<label for="data-idpel" class="col-md-1 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">IDPEL:</label>
+									<div class="col-md-3">
+										<input type="text" name="idpel" class="form-control" id="data-idpel" data-ng-model="datapel.idpel" number-input maxlength="15">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="data-nometer" class="col-md-1 control-label col-md-offset-1">NOMTR:</label>
+									<div class="col-md-3">
+										<input type="text" name="nometer" class="form-control" id="data-nometer" data-ng-model="datapel.nometer" number-input maxlength="25" disabled>
+									</div>
+									<div class="col-md-5 col-md-offset-1">
+										<button class="btn btn-primary" data-ng-click="loadPelanggan()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row" data-ng-show="datapelanggan.length > 0">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="meter-dc scrollable" style="max-height: 400px;">
+						<table class="table table-bordered table-condensed table-striped">
+							<thead>
+								<tr>
+									<th>IDPEL</th>
+									<th>NAMA</th>
+									<th>ALAMAT</th>
+									<th>TARIF</th>
+									<th>DAYA</th>
+									<th>RBM</th>
+									<th>GARDU</th>
+									<th>KODUK</th>
+									<th>AKSI</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="c in datapelanggan">
+									<td>{{c.id}}</td>
+									<td>{{c.nama}}</td>
+									<td>{{c.alamat}}</td>
+									<td>{{c.tarif}}</td>
+									<td>{{c.daya}}</td>
+									<td>{{c.rbm}}</td>
+									<td>{{c.gardu}}</td>
+									<td>{{c.koduk}}</td>
+									<td>
+										<a data-ng-href="#/pelanggan/{{c.id}}/detail" class="btn btn-info btn-xs btn-default tooltips" title="detail"><i class="fa fa-tags"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+						<div class="spacer-h"></div>
+						<!--<ul class="pager">
+							<li data-ng-class="{ disabled: datapel.cpage == 0 }"><a href="" data-ng-click="setPrevious()" data-ng-disabled="datapel.cpage == 0"><span class="icon-prev"></span> Sebelumnya</a></li>
+							<li data-ng-class="{ disabled: datapel.cpage == datapel.numpage - 1 }"><a href="" data-ng-click="setNext()" data-ng-disabled="datapel.cpage == datapel.numpage - 1">Berikutnya <span class="icon-next"></span></a></li>
+						</ul>-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

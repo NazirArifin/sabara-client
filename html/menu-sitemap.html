@@ -1,0 +1,19 @@
+<div class="row">
+	<div class="col-md-4" data-ng-repeat="i in [0, 1, 2]">
+		<h4><i class="fa fa-fw fa-lg {{menu[i].icon}}"></i> {{menu[i].title|uppercase}}</h4><hr>
+		<ul class="list-unstyled">
+			<li data-ng-repeat="c in menu[i].item" data-ng-show="menuShow(c.user, user.id_level)"><a data-ng-href="{{c.url}}" data-ng-click="toggleSitemap()"> &nbsp; {{c.title}}</a></li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12"><hr></div>
+</div>
+<div class="row">
+	<div class="col-md-4" data-ng-repeat="i in [3, 4, 5]">
+		<h4><i class="fa fa-fw fa-lg {{menu[i].icon}}"></i> {{menu[i].title|uppercase}}</h4><hr>
+		<ul class="list-unstyled">
+			<li data-ng-repeat="c in menu[i].item" data-ng-show="menuShow(c.user, user.id_level)"><a data-ng-href="{{c.url}}" data-ng-click="toggleSitemap()"> &nbsp; {{c.title}}</a></li>
+		</ul>
+	</div>
+</div>

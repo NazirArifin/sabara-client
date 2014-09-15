@@ -1,0 +1,85 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+						<div class="spacer-h"></div><br>
+						<form role="form" class="form-horizontal well" name="formcatat">
+							<div class="form-group">
+								<label for="catat-blth" class="col-md-1 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">BLTH:</label>
+								<div class="col-md-2">
+									<select name="blth" id="catat-blth1" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="catat.blth1"></select>
+								</div>
+								<label for="" class="col-md-1 control-label"><span class="label label-info">s/d</span></label>
+								<label for="catat-blth2" class="col-md-1 control-label">BLTH:</label>
+								<div class="col-md-2">
+									<select name="blth" id="catat-blth2" class="form-control" data-ng-options="c.id as c.nama for c in blth" data-ng-model="catat.blth2"></select>
+								</div>
+								<label for="catat-unit" class="col-md-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+								<div class="col-md-2" data-ng-show="needUnit()">
+									<select name="unit" id="catat-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="catat.unit">
+										<option value="0">-- pilih unit --</option>
+									</select>
+								</div>
+								<div class="col-md-1">
+									<button class="btn btn-primary" data-ng-click="loadRekap()"><i class="fa fa-fw fa-search"></i></button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="row" data-ng-show="rekap.data.length > 0">
+					<div class="col-md-6">
+						<h6 class="text-info"><strong><i class="fa fa-fw fa-angle-right"></i> DATA REKAP LBKB</strong>
+							<div class="pull-right">
+								<a data-ng-href="{{server}}/excel/lbkb/analisa?{{getParam()}}" class="btn btn-success btn-xs tooltips" title="ekspor data ke excel"><i class="fa fa-fw fa-save fa-lg"></i></a>
+							</div>
+						</h6>
+						<div class="spacer-h"></div>
+						<table class="table table-hover table-condensed table-bordered">
+							<thead>
+								<tr>
+									<th>KETERANGAN</th>
+									<th data-ng-repeat="c in rekap.title">{{c}}</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr data-ng-repeat="c in rekap.data" data-ng-class="{ success: c.id == 0 }" data-ng-show="c.id != 0">
+									<td>{{c.kode}}. {{c.nama}}</td>
+									<td data-ng-repeat="d in c.data track by $index" data-ng-class="{ danger: d != '0' && c.id != 0 }">
+										<strong class="label label-danger" data-ng-show="d != 0 && c.id != 0">{{d}}</strong>
+										<span data-ng-show="d == 0 && c.id != 0">{{d}}</span>
+										<span data-ng-show="c.id == 0">{{d}}</span>
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr class="warning">
+									<td><strong>T O T A L</strong></td>
+									<td data-ng-repeat="c in rekap.total track by $index"><strong>{{c}}</strong></td>
+								</tr>
+							</tfoot>
+						</table>
+						<div class="spacer-h"></div>
+					</div>
+					<div class="col-md-6">
+						<h6 class="text-info"><strong><i class="fa fa-fw fa-angle-right"></i> GRAFIK DATA LBKB</strong></h6>
+						<br>
+						<div style="width: 100%; height: 500px;" data-ytitle="Jumlah" load="{{loadGraph}}" data-target="{{server}}/graph/lbkb?{{getParam()}}" class="clearfix" line-chart></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,82 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(5)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<div class="well" data-ng-show="needUnit()">
+							<form role="form" class="form-horizontal" novalidate>
+								<div class="form-group">
+									<label for="stmt-unit" class="col-md-2 control-label col-md-offset-1">UNIT:</label>
+									<div class="col-md-3">
+										<select name="unit" id="stmt-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="stmt.unit">
+											<option value="0">-- pilih unit --</option>
+										</select>
+									</div>
+									<div class="col-md-4">
+										<button class="btn btn-primary" data-ng-click="loadSTMT()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="col-md-12">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-10 col-md-offset-1">
+									<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="stmtList.length > 0">
+										<thead>
+											<tr>
+												<th>TANGGAL</th>
+												<th>UNIT</th>
+												<th>KODE PROSES</th>
+												<th>PELANGGAN</th>
+												<th>DAYA</th>
+												<th>LWBP</th>
+												<th>WBP</th>
+												<th>KVARH</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in stmtList">
+												<td>{{c.tanggal}}</td>
+												<td>{{c.namaunit}}</td>
+												<td>{{c.kodeproses}}</td>
+												<td>{{c.total}}</td>
+												<td>{{c.daya}}</td>
+												<td>{{c.lwbp}}</td>
+												<td>{{c.wbp}}</td>
+												<td>{{c.kvarh}}</td>
+												<td><a data-ng-href="{{server}}/{{c.file}}" class="btn btn-xs btn-info"><i class="fa fa-download"></i></a></td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pagination pagination-sm" data-ng-show="stmtList.length > 0">
+										<li data-ng-class="{ disabled: stmt.cpage == 0 }"><a href="" data-ng-click="prevPage()">&laquo;</a></li>
+										<li data-ng-repeat="n in range(stmt.numpage)" data-ng-class="{ active: n == stmt.cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n + 1">1</a></li>
+										<li data-ng-class="{ disabled: stmt.cpage == stmt.numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

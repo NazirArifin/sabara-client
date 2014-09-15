@@ -1,0 +1,113 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/0">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(1)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="spacer-h"></div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="well" data-ng-show="needUnit()">
+										<form role="form" class="form-horizontal" name="formgd">
+											<div class="form-group">
+												<label for="e-unit" class="col-md-2 control-label col-md-offset-1">UNIT:</label>
+												<div class="col-md-5">
+													<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="gardu.unit">
+														<option value="0">-- pilih unit --</option>
+													</select>
+												</div>
+												<div class="col-md-1">
+													<button class="btn btn-primary" data-ng-click="loadGardu()"><i class="fa fa-fw fa-search"></i></button>
+												</div>
+											</div>
+										</form>
+									</div>
+									<table class="table table-striped table-bordered table-condensed" data-ng-show="garduList.length > 0">
+										<thead>
+											<tr>
+												<th>NO.</th>
+												<th>GARDU</th>
+												<th>PLGGN</th>
+												<th>DAYA</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in garduList">
+												<td>{{$index + 1}}.</td>
+												<td>{{c.nama}}</td>
+												<td>{{c.pelanggan}}</td>
+												<td>{{c.daya}}</td>
+												<td>
+													<a href="" class="btn btn-xs btn-default tooltips" title="sunting" data-ng-click="setGardu($index)"><i class="fa fa-pencil"></i></a>
+													<a href="" data-ng-show="c.pelanggan == 0" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" delete-gardu="{{c.id}}"><i class="fa fa-trash-o"></i></a>
+													<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map-gardu="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pagination pagination-sm" data-ng-show="gardu.numpage > 0">
+										<li data-ng-class="{ disabled: gardu.cpage == 0 }"><a href="" data-ng-click="prevPage()">&laquo;</a></li>
+										<li data-ng-repeat="n in range(gardu.numpage)" data-ng-class="{ active: n == gardu.cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n + 1">1</a></li>
+										<li data-ng-class="{ disabled: gardu.cpage == gardu.numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
+									</ul>
+								</div>
+								<div class="col-md-8">
+									<!-- form edit gardu -->
+									<div data-ng-show="editing">
+										<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Tambah / Sunting Gardu</h5>
+										<hr>
+										<form class="form-horizontal" role="form" name="formg">
+											<div class="form-group">
+												<label for="g-unit" class="col-md-3 control-label">Unit:</label>
+												<div class="col-md-6">
+													<input type="hidden" name="unit" data-ng-model="egardu.unit">
+													<input type="text" name="unit-f" id="g-unit" class="form-control" data-ng-value="getcurUnit()" readonly>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="g-nama" class="col-md-3 control-label">Nama:</label>
+												<div class="col-md-6">
+													<input type="text" name="nama" id="g-nama" class="form-control" data-ng-model="egardu.nama">
+												</div>
+											</div>
+											<div class="form-group">
+												<div class="col-md-6 col-md-offset-3">
+													<button class="btn btn-primary" save-gardu>Simpan Data</button> 
+													<button class="btn btn-default" data-ng-click="resetGardu()">Batal</button>
+												</div>
+											</div>
+										</form>
+									</div>
+									
+									<!-- tampilkan map -->
+									<div>
+										<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan</h5>
+										<hr>
+										<div class="well">
+											<div id="map-container" class="map"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="spacer-h"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

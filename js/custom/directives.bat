@@ -1,0 +1,1 @@
+uglifyjs directive.js directive-form.js -o directives.min.js

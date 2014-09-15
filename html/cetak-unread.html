@@ -1,0 +1,90 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(2)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-8 col-md-offset-2">
+						<div class="spacer-h"></div>
+						<div class="well">
+							<form role="form" class="form-horizontal" name="formu">
+								<div class="form-group">
+									<label for="unread-unit" class="col-md-1 col-md-offset-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+									<div class="col-md-3" data-ng-show="needUnit()">
+										<select name="unit" id="unread-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="unread.unit" data-ng-change="loadRBM()">
+											<option value="0">-- pilih unit --</option>
+										</select>
+									</div>
+									<label for="unread-rbm" class="col-md-1 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">RBM:</label>
+									<div class="col-md-3">
+										<select name="rbm" id="unread-rbm" class="form-control" data-ng-model="unread.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+											<option value="">-- pilih rbm --</option>
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-5 col-md-offset-2"><button class="btn btn-primary" data-ng-click="loadUnread()"><i class="fa fa-fw fa-search"></i> Tampilkan</button></div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="row" data-ng-show="uList.length > 0">
+					<div class="col-md-12">
+						<h6 class="text-info">
+							<div class="pull-right">
+								<button class="btn btn-info btn-sm" print-popup data-target="{{server}}/print/unread?{{getParam()}}"><i class="fa fa-fw fa-print fa-lg"></i></button>
+								<a data-ng-href="{{server}}/excel/unread?{{getParam()}}" class="btn btn-success btn-sm"><i class="fa fa-fw fa-save fa-lg"></i></a>
+							</div>
+						</h6>
+						<div class="spacer-h"></div>
+						<div class="meter-dc scrollable" style="min-height: 50px; max-height: 550px;">
+							<table class="table table-bordered table-condensed table-striped" style="width: 1200px;">
+								<thead>
+									<tr>
+										<th>RBM</th>
+										<th>IDPEL</th>
+										<th>NAMA</th>
+										<th>ALAMAT</th>
+										<th>KODUK</th>
+										<th>GARDU</th>
+										<th>TARIF</th>
+										<th>DAYA</th>
+										<th>LWBP</th>
+										<th>WBP</th>
+										<th>KVARH</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr data-ng-repeat="c in uList">
+										<td>{{c.rbm}}</td>
+										<td>{{c.idpel}}</td>
+										<td>{{c.nama}}</td>
+										<td>{{c.alamat}}</td>
+										<td>{{c.koduk}}</td>
+										<td>{{c.gardu}}</td>
+										<td>{{c.tarif}}</td>
+										<td>{{c.daya}}</td>
+										<td>{{c.lwbp}}</td>
+										<td>{{c.wbp}}</td>
+										<td>{{c.kvarh}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="spacer-h"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
