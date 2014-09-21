@@ -29,21 +29,25 @@
 												</select>
 											</div>
 											<div class="form-group">
-												<span class="btn btn-success btn-file tooltips" title="pilih file data"><i class="fa fa-fw fa-paste"></i> Pilih File <input type="file" name="file" file-input accept=".txt,.csv,,.zip"></input></span>
+												<span class="btn btn-success btn-file tooltips" title="pilih file data"><i class="fa fa-fw fa-paste"></i> Pilih File <input type="file" name="file" file-input accept=".csv,.txt"></input></span>
 											</div>
 											<button type="button" class="btn btn-primary" save-npp><i class="fa fa-flash fa-lg"></i> Proses File</button>
 										</form>
 									</div>
 								</div>
 							</div>
-							<div class="row" data-ng-show="progress == 0 && result.unit != ''">
+							<div class="row" data-ng-show="result.file != ''">
 								<div class="col-md-8 col-md-offset-2">
 									<h5 class="text-center">File Berhasil Diproses</h5>
 									<table class="table table-bordered table-condensed table-striped">
 										<tbody>
 											<tr>
-												<td>UNIT</td>
-												<td>: {{result.unit}}</td>
+												<td>FILE</td>
+												<td>: {{result.file}}</td>
+											</tr>
+											<tr>
+												<td>DATA</td>
+												<td>: {{result.numdata}}</td>
 											</tr>
 										</tbody>
 									</table>

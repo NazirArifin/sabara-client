@@ -176,12 +176,14 @@ app.directive('saveNpp', ['loader', '$cookies', function(loader, $cookies) {
 			xhr.open('post', $scope.server + '/npp/' + $scope.npp.jenis, true);
 			xhr.setRequestHeader('Authorization', 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password));
 			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-			xhr.setRequestHeader('X-File-Name', $scope.file.name);
-			xhr.setRequestHeader('X-File-Size', $scope.file.size);
 			xhr.upload.onprogress = function(e) { loader.show(); };
 			xhr.onload = function() {
 				var r = angular.fromJson(this.responseText);
-				console.log(r);
+				if (r.error.length == 0) {
+					$scope.result = r;
+					loader.hide();
+					alertify.success('Data berhasil diproses!');
+				} else alertify.error('Data gagal diproses!');
 				$scope.$apply();
 			};
 			xhr.onerror = function() { loader.hide(); };

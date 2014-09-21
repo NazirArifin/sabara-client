@@ -105,6 +105,7 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 	// impor tusbung
 	if ($scope.submenu == 'npp') {
 		$scope.npp = { jenis: '' };
+		$scope.result = { file: '', numdata: 0 };
 	}
 	
 	// tunggak
