@@ -37,63 +37,43 @@
 											</div>
 										</form>
 									</div>
-									<table class="table table-striped table-bordered table-condensed">
+									<table class="table table-striped table-bordered table-condensed small" data-ng-show="rbmList.length > 0">
 										<thead>
 											<tr>
-												<th>KODE RBM</th>
+												<th>RBM</th>
 												<th>PETUGAS</th>
-												<th>PELANGGAN</th>
+												<th>PLGN</th>
 												<th>RPTAG</th>
 												<th>RPBK</th>
 												<th>AKSI</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>BADJAS</td>
-												<td>Januri</td>
-												<td>120</td>
-												<td>4.000.000</td>
-												<td>340.000</td>
+											<tr data-ng-repeat="c in rbmList">
+												<td>{{c.rbm}}</td>
+												<td>{{c.petugas}}</td>
+												<td>{{c.pelanggan}}</td>
+												<td>{{c.rptag}}</td>
+												<td>{{c.rpbk}}</td>
 												<td>
 													<div class="btn-group btn-group-xs">
-														<button class="btn btn-info" title="lihat di peta"><i class="fa fa-map-marker"></i></button>
-														<button class="btn" title="detail"><i class="fa fa-search"></i></button>
+														<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.rbm}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
+														<button class="btn" title="detail" data-ng-click="loadDetail(c.rbm)"><i class="fa fa-search"></i></button>
 													</div>
 												</td>
 											</tr>
-											<!--
-											<tr data-ng-repeat="c in rbmList">
-												<td>{{c.nama}}</td>
-												<td>{{c.hari}}</td>
-												<td data-ng-hide="editing && row == $index"><span data-ng-class="{ 'label label-danger' : c.nama_petugas == 'UNSET' }">{{c.nama_petugas}}</span></td>
-												<td data-ng-show="editing && row == $index">
-													<select name="petugas" id="petugas" class="form-control" data-ng-model="c.petugas" data-ng-options="c.id as c.nama for c in petugasList">
-														<option value="">-- pilih petugas --</option>
-													</select>
-												</td>
-												<td>{{c.total}}</td>
-												<td>{{c.daya}}</td>
-												<td>
-													<a href="" class="btn btn-xs btn-default tooltips" data-ng-hide="editing && row == $index" title="ubah petugas" data-ng-click="setPetugas($index)"><i class="fa fa-user"></i></a>
-													<button class="btn btn-xs btn-primary tooltips" title="simpan petugas" data-ng-show="editing && row == $index" data-ng-click="updatePetugas($index)"><i class="fa fa-check"></i></button>
-													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" data-ng-show="c.total == '0'" delete-rbm="{{c.id}}"><i class="fa fa-trash-o"></i></a>
-													<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
-												</td>
-											</tr>
-											-->
 										</tbody>
 									</table>
 									<ul class="pager" data-ng-show="rbmList.length > 0">
-										<li data-ng-class="{ disabled: rbm.cpage == 0 }"><a href="" data-ng-click="setPrevious()" data-ng-disabled="rbm.cpage == 0"><span class="icon-prev"></span> Sebelumnya</a></li>
-										<li data-ng-class="{ disabled: rbm.cpage == rbm.numpage - 1 }"><a href="" data-ng-click="setNext()" data-ng-disabled="rbm.cpage == rbm.numpage - 1">Berikutnya <span class="icon-next"></span></a></li>
+										<li data-ng-class="{ disabled: tunggak.cpage == 0 }"><a href="" data-ng-click="setPrevious()" data-ng-disabled="tunggak.cpage == 0"><span class="icon-prev"></span> Sebelumnya</a></li>
+										<li data-ng-class="{ disabled: rbm.tunggak == numpage - 1 }"><a href="" data-ng-click="setNext()" data-ng-disabled="tunggak.cpage == numpage - 1">Berikutnya <span class="icon-next"></span></a></li>
 									</ul>
 								</div>
 								<div class="col-md-7">
-									<div>
+									<div data-ng-show="showDetail">
 										<h5 class="text-muted">Rincian Data Tagih RBM</h5>
 										<hr>
-										<table class="table table-bordered table-condensed table-striped">
+										<table class="table table-bordered table-condensed table-striped small">
 											<thead>
 												<tr>
 													<th>IDPEL</th>
@@ -107,14 +87,14 @@
 												</tr>
 											</thead>
 											<tbody>
-												<tr>
-													<td>12432323</td>
-													<td>JANURI</td>
-													<td>PAMEKASAN JLN A</td>
-													<td>B1/900</td>
-													<td>3</td>
-													<td>340.000</td>
-													<td>12.000</td>
+												<tr data-ng-repeat="c in listDetail">
+													<td>{{c.idpel}}</td>
+													<td>{{c.nama}}</td>
+													<td>{{c.alamat}}</td>
+													<td>{{c.td}}</td>
+													<td>{{c.lembar}}</td>
+													<td>{{c.rptag}}</td>
+													<td>{{c.rpbk}}</td>
 													<td>
 														<div class="btn-group btn-group-xs">
 															<button class="btn btn-info" title="set cetak"><i class="fa fa-print"></i></button>
@@ -125,7 +105,7 @@
 											</tbody>
 										</table>
 									</div>
-									<div>
+									<div data-ng-show="showMap">
 										<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan Nunggak</h5>
 										<hr>
 										<div class="well">

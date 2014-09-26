@@ -111,7 +111,76 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 	// tunggak
 	if ($scope.submenu == 'tunggak') {
 		$scope.tunggak = {
-			unit: $scope.myUnit(), keyword: ''
+			unit: $scope.myUnit(), keyword: '', cpage: 0
+		};
+		$scope.numpage = 0;
+		$scope.rbmList = [];
+		$scope.loadRbm = function() {
+			loader.show();
+			$http({ method: 'GET', url: $scope.server + '/tunggakan?' + jQuery.param($scope.tunggak) }).
+			success(function(d) {
+				loader.hide();
+				$scope.rbmList = d.data;
+				$scope.numpage = d.numpage;
+			});
+		};
+		
+		// pagination rbm
+		$scope.setPrevious = function() {
+			var p = $scope.tunggak.cpage - 1;
+			if (p < 0) return;
+			$scope.tunggak.cpage--;
+			$scope.loadRbm();
+		};
+		$scope.setNext = function() {
+			var n = $scope.tunggak.cpage + 1;
+			if (n > $scope.tunggak.numpage - 1) return;
+			$scope.tunggak.cpage++;
+			$scope.loadRbm();
+		};
+		
+		// detil atau map
+		$scope.showMap = false;
+		$scope.showDetail = false;
+		
+		// load Detail
+		$scope.listDetail = [];
+		$scope.loadDetail = function(nama) {
+			loader.show();
+			$scope.showDetail = false;
+			$http({ method: 'GET', url: $scope.server + '/tunggakan/detail/' + nama }).
+			success(function(d) {
+				loader.hide();
+				$scope.listDetail = d;
+				$scope.showDetail = true;
+				$scope.showMap = false;
+			});
+		};
+	}
+	
+	if ($scope.submenu == 'monitoring') {
+		$scope.rbmList = [];
+		$scope.hp = {
+			unit: $scope.myUnit(), rbm: '', tgl: new Date().toString('dd/MM/yyyy')
+		};
+		$scope.loadRBM = function() {
+			$scope.hp.rbm = '';
+			$http({ url: $scope.server + '/rbm/unit/' + $scope.hp.unit, method: 'GET' }).
+			success(function(d) { $scope.rbmList = d; });
+		};
+		if ($scope.myUnit() != 0) $scope.loadRBM();
+		
+		// load data tusbung
+		$scope.tusbung = [];
+		$scope.loadTusbung = function() {
+			loader.show();
+			$http({
+				url: $scope.server + '/tusbung?' + jQuery.param($scope.hp), method: 'GET'
+			}).
+			success(function(d) {
+				loader.hide();
+				$scope.tusbung = d;
+			});
 		};
 	}
 }

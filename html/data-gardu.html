@@ -33,7 +33,7 @@
 											</div>
 										</form>
 									</div>
-									<table class="table table-striped table-bordered table-condensed" data-ng-show="garduList.length > 0">
+									<table class="table table-striped table-bordered table-condensed small" data-ng-show="garduList.length > 0">
 										<thead>
 											<tr>
 												<th>NO.</th>
@@ -93,7 +93,10 @@
 									
 									<!-- tampilkan map -->
 									<div>
-										<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan</h5>
+										<h5 class="text-muted">
+											<i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan
+											<a href="" id="link-map-open" target="_blank" data-ng-disabled="koordinat.center.length == 0" class="btn btn-xs btn-primary pull-right"><i class="fa fa-fw fa-search-plus"></i> Lebih Besar</a>
+										</h5>
 										<hr>
 										<div class="well">
 											<div id="map-container" class="map"></div>

@@ -21,29 +21,27 @@
 								<div class="col-md-8 col-md-offset-2">
 									<div class="well">
 										<form role="form" class="form-horizontal" name="formi">
-											<div class="form-group" data-ng-show="needUnit()">
+											<!--<div class="form-group" data-ng-show="needUnit()">
 												<label for="hp-unit" class="col-md-2 col-md-offset-1 control-label">UNIT:</label>
 												<div class="col-md-3">
 													<select name="unit" id="hp-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="hp.unit" data-ng-change="loadRBM()">
 														<option value="0">-- pilih unit --</option>
 													</select>
 												</div>
-											</div>
+											</div>-->
 											<div class="form-group">
-												<label for="hp-rbm" class="col-md-2 control-label col-md-offset-1">RBM:</label>
+												<!--<label for="hp-rbm" class="col-md-2 control-label col-md-offset-1">RBM:</label>
 												<div class="col-md-3">
 													<select name="rbm" id="hp-rbm" class="form-control" data-ng-model="hp.rbm" data-ng-options="c.id as c.nama for c in rbmList">
 														<option value="">-- pilih rbm --</option>
 													</select>
-												</div>
-												<label for="hp-tgl" class="col-md-2 control-label">TANGGAL:</label>
+												</div>-->
+												<label for="hp-tgl" class="col-md-2 col-md-offset-1 control-label">TANGGAL:</label>
 												<div class="col-md-3">
 													<input type="text" name="tanggal" id="hp-tgl" class="form-control" data-ng-model="hp.tgl" datepicker>
 												</div>
-											</div>
-											<div class="form-group">
-												<div class="col-md-8 col-md-offset-3">
-													<button class="btn btn-primary" data-ng-click="loadBaca()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
+												<div class="col-md-4 col-md-offset-1">
+													<button class="btn btn-primary" data-ng-click="loadTusbung()"><i class="fa fa-fw fa-search"></i> Tampilkan</button> 
 												</div>
 											</div>
 										</form>
@@ -53,31 +51,37 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<table class="table table-bordered table-condensed table-striped table-hover">
+									<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="tusbung.length > 0">
 										<thead>
 											<tr>
 												<th>JAM TUSBUNG</th>
 												<th>PETUGAS</th>
 												<th>IDPEL</th>
+												<th>NAMA</th>
+												<th>ALAMAT</th>
 												<th>TARIF/DAYA</th>
 												<th>KETERANGAN</th>
 												<th>FOTO 1</th>
 												<th>FOTO 2</th>
+												<th>LEMBAR</th>
 												<th>RPTG</th>
 												<th>RPBK</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>12:40</td>
-												<td>Sarimin</td>
-												<td>845434</td>
-												<td>B1/900</td>
-												<td>Meter Mundur</td>
-												<td></td>
-												<td></td>
-												<td>230.000</td>
-												<td>30.000</td>
+											<tr data-ng-repeat="c in tusbung">
+												<td>{{c.jam}}</td>
+												<td>{{c.petugas}}</td>
+												<td>{{c.idpel}}</td>
+												<td>{{c.nama}}</td>
+												<td>{{c.alamat}}</td>
+												<td>{{c.td}}</td>
+												<td>{{c.ketbaca}}</td>
+												<td><a href="" data-target="{{server}}{{c.foto1}}" image-preview><img data-ng-src="{{server}}{{c.foto1}}?thumb" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+												<td><a href="" data-target="{{server}}{{c.foto2}}" image-preview><img data-ng-src="{{server}}{{c.foto2}}?thumb" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+												<td>{{c.lembar}}</td>
+												<td>{{c.rptag}}</td>
+												<td>{{c.rpbk}}</td>
 											</tr>
 										</tbody>
 									</table>

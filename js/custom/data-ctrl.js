@@ -121,6 +121,10 @@ function DataCtrl($scope, $http, $cookies, $location, loader) {
 		}; $scope.resetKoordinat();
 		$scope.setKoordinat = function(d) { $scope.koordinat = d; };
 		$scope.mapParams = {};
+		$scope.currentGardu = 'gimana';
+		$scope.getGarduLink = function() {
+			return $scope.currentGardu;
+		};
 	}
 	
 	// rbm

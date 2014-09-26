@@ -397,14 +397,11 @@ app.directive('loadMapGardu', ['$cookies', '$http', function($cookies, $http) {
 			$http({ url: $scope.server + '/map/gardu/' + attrs.loadMapGardu, method: 'GET' }).
 			success(function(d) {
 				if (d.center.length == 0) return alertify.error('Gardu tidak memiliki data peta');
-				
-				// set mapParam
-				$scope.mapParams.center = d.center;
-				$scope.mapParams.zoom = 16;
-				$scope.mapParams.size = '640x640';
-				$scope.mapParams.maptype = 'road';
-				
 				$scope.setKoordinat(d);
+				//$scope.currentGardu = attrs.loadMapGardu;
+				//$scope.$apply();
+				$('#link-map-open').attr('href', '#/map/gardu/' + attrs.loadMapGardu);
+				
 				var center = d.center, 
 					data = d.data,
 					div = document.getElementById(attrs.container);
@@ -457,6 +454,134 @@ app.directive('loadMapGardu', ['$cookies', '$http', function($cookies, $http) {
 				}
 			});
 		});
+	};
+}]);
+
+/**
+ * Load map 2 untuk tagihan
+ */
+app.directive('loadMap2', ['$cookies', '$http', function($cookies, $http) {
+	return function($scope, elm, attrs) {
+		elm.on('click', function() {
+			//$scope.resetKoordinat();
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+			$http({ url: $scope.server + '/map/tagihan/' + attrs.loadMap2, method: 'GET' }).
+			success(function(d) {
+				if (d.center.length == 0) return alertify.error('RBM tidak memiliki data peta');
+				
+				$scope.showDetail = false;
+				$scope.showMap = true;
+
+				var center = d.center, 
+					data = d.data,
+					div = document.getElementById(attrs.container);
+				
+				var latlng = new google.maps.LatLng(center.lat, center.longt);
+				var Opts = {
+					zoom: 16, center: latlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP,
+					mapTypeControlOptions: {
+						style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+					}
+				};
+				var map = new google.maps.Map(div, Opts);
+				google.maps.event.trigger(map, 'resize');
+				
+				var nodes = [];
+				var iw = new google.maps.InfoWindow();
+				
+				for (var i = 0; i < data.length; i++) {
+					var ds = data[i],
+						pos = new google.maps.LatLng(ds.lat, ds.longt);
+					var marker = new MarkerWithLabel({
+						position: pos,
+						map: map,
+						title: ds.idpel + ' - ' + ds.nama,
+						labelContent: ds.urut,
+						labelAnchor: new google.maps.Point(5, 33),
+						labelClass: "labels",
+						labelInBackground: false,
+						constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
+					});
+						
+					google.maps.event.addListener(marker, 'click', function() { 
+					iw.setContent(this.constring);
+					iw.open(map, this); }); 
+					
+					nodes.push(pos);
+				}
+			});
+		});
+	};
+}]);
+
+/**
+ * map loader otomatis, di halaman map
+ */
+app.directive('mapAutoLoader', ['$cookies', '$http', function($cookies, $http) {
+	return {
+		restrict: 'CA',
+		link: function($scope, elm, attrs) { 
+			// jika gardu
+			if ($scope.type == 'gardu') {
+				$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+				$http({ url: $scope.server + '/map/gardu/' + $scope.param, method: 'GET' }).
+				success(function(d) {
+					var center = d.center, 
+						data = d.data,
+						div = document.getElementById('map-container');
+					
+					var latlng = new google.maps.LatLng(center.lat, center.longt);
+					var Opts = {
+						zoom: 16, center: latlng,
+						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						mapTypeControlOptions: {
+							style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+						}
+					};
+					var map = new google.maps.Map(div, Opts);
+					google.maps.event.trigger(map, 'resize');
+					
+					var nodes = [];
+					var iw = new google.maps.InfoWindow();
+					
+					// marker untuk gardu
+					var marker = new MarkerWithLabel({
+						position: new google.maps.LatLng(center.lat, center.longt),
+						map: map,
+						title: center.nama,
+						labelContent: center.nama,
+						icon: 'img/tiang.png'
+					});
+					
+					for (var i = 0; i < data.length; i++) {
+						var ds = data[i],
+							pos = new google.maps.LatLng(ds.lat, ds.longt);
+						var marker = new MarkerWithLabel({
+							position: pos,
+							map: map,
+							title: ds.idpel + ' - ' + ds.nama,
+							labelContent: ds.urut,
+							labelAnchor: new google.maps.Point(5, 33),
+							labelClass: "labels",
+							labelInBackground: false,
+							constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
+						});
+						
+						google.maps.event.addListener(marker, 'click', function() { 
+						iw.setContent(this.constring);
+						iw.open(map, this); }); 
+						
+						nodes.push(pos);
+					}
+				});
+			}
+			// akhir jika gardu
+			
+			if ($scope.type == 'rbm') {
+				
+			}
+		}
 	};
 }]);
 

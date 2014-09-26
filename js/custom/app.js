@@ -34,6 +34,9 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 	when('/user/koordinator', { templateUrl: 'html/user-koordinator.html', controller: UserCtrl }).
 	when('/user/administrator', { templateUrl: 'html/user-administrator.html', controller: UserCtrl }).
 	when('/user/observer', { templateUrl: 'html/user-observer.html', controller: UserCtrl }).
+	when('/map/gardu/:idGardu', { templateUrl: 'html/map.html', controller: MapCtrl }).
+	when('/map/rbm/:idRbm', { templateUrl: 'html/map.html', controller: MapCtrl }).
+	when('/map/tagihan/:idTagihan', { templateUrl: 'html/map.html', controller: MapCtrl }).
 	otherwise({ redirectTo: '/login' });
 	
 	$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=utf-8';
