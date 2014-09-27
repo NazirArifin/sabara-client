@@ -445,8 +445,7 @@ app.directive('loadMap2', ['$cookies', '$http', function($cookies, $http) {
 				if (d.center.length == 0) return alertify.error('RBM tidak memiliki data peta');
 				if (d.data.length == 0) return alertify.error('RBM tidak memiliki data peta');
 				$scope.setKoordinat(d);
-				$scope.showDetail = false;
-				$scope.showMap = true;
+				$scope.showMapContainer();
 				
 				$('#link-map-open').attr('href', '#/map/tagihan/' + attrs.loadMap2);
 				
@@ -470,10 +469,12 @@ app.directive('loadMap2', ['$cookies', '$http', function($cookies, $http) {
 				
 				for (var i = 0; i < data.length; i++) {
 					var ds = data[i],
-						pos = new google.maps.LatLng(ds.lat, ds.longt);
+						pos = new google.maps.LatLng(ds.lat, ds.longt),
+						color = (ds.status == 0 ? 'red' : 'blue');
 					var marker = new MarkerWithLabel({
 						position: pos,
 						map: map,
+						icon: 'http://maps.google.com/mapfiles/ms/icons/' + color + '-dot.png',
 						title: ds.idpel + ' - ' + ds.nama,
 						labelContent: ds.urut,
 						labelAnchor: new google.maps.Point(5, 33),
@@ -609,7 +610,54 @@ app.directive('mapAutoLoader', ['$cookies', '$http', function($cookies, $http) {
 			}
 			// akhir dari rbm
 			
-			
+			// jika tagihan
+			if ($scope.type == 'tagihan') {
+				$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+				$http({ url: $scope.server + '/map/tagihan/' + $scope.param, method: 'GET' }).
+				success(function(d) {
+					var center = d.center, 
+						data = d.data,
+						div = document.getElementById('map-container');
+					
+					var latlng = new google.maps.LatLng(center.lat, center.longt);
+					var Opts = {
+						zoom: 16, center: latlng,
+						mapTypeId: google.maps.MapTypeId.ROADMAP,
+						mapTypeControlOptions: {
+							style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+						}
+					};
+					var map = new google.maps.Map(div, Opts);
+					google.maps.event.trigger(map, 'resize');
+					
+					var nodes = [];
+					var iw = new google.maps.InfoWindow();
+					
+					for (var i = 0; i < data.length; i++) {
+						var ds = data[i],
+							pos = new google.maps.LatLng(ds.lat, ds.longt),
+							color = (ds.status == 0 ? 'red' : 'blue');
+						var marker = new MarkerWithLabel({
+							position: pos,
+							map: map,
+							icon: 'http://maps.google.com/mapfiles/ms/icons/' + color + '-dot.png',
+							title: ds.idpel + ' - ' + ds.nama,
+							labelContent: ds.urut,
+							labelAnchor: new google.maps.Point(5, 33),
+							labelClass: "labels",
+							labelInBackground: false,
+							constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
+						});
+						
+						google.maps.event.addListener(marker, 'click', function() { 
+						iw.setContent(this.constring);
+						iw.open(map, this); }); 
+						
+						nodes.push(pos);
+					}
+				});				
+			}
+			// akhir dari tagihan
 		}
 	};
 }]);

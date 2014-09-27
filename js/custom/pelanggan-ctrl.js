@@ -140,8 +140,12 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 		};
 		
 		// detil atau map
-		$scope.showMap = false;
+		$scope.showMap = true;
 		$scope.showDetail = false;
+		$scope.showMapContainer = function() {
+			$scope.showDetail = false;
+			$scope.showMap = true;
+		};
 		
 		// load Detail
 		$scope.listDetail = [];
