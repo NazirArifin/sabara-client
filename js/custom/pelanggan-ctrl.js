@@ -145,15 +145,38 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 		
 		// load Detail
 		$scope.listDetail = [];
+		$scope.currentRbm = '';
 		$scope.loadDetail = function(nama) {
+			$scope.currentRbm = nama;
 			loader.show();
 			$scope.showDetail = false;
 			$http({ method: 'GET', url: $scope.server + '/tunggakan/detail/' + nama }).
 			success(function(d) {
 				loader.hide();
+				if (d.length == 0) return alertify.error('Tidak ada data di RBM');
 				$scope.listDetail = d;
 				$scope.showDetail = true;
 				$scope.showMap = false;
+			});
+		};
+		
+		$scope.koordinat = {};
+		$scope.resetKoordinat = function() {
+			$scope.koordinat = { data: [], center: [] };
+		}; $scope.resetKoordinat();
+		$scope.setKoordinat = function(d) { $scope.koordinat = d; };
+		
+		// tombol lunas dan cetak
+		$scope.setCetakLunas = function(i, t) {
+			loader.show();
+			$http({ url: $scope.server + '/tusbung/' + (t == 1 ? 'cetak' : 'lunas') + '/' + $scope.listDetail[i].id, method: 'GET' }).
+			success(function(d) {
+				loader.hide();
+				if (d.status == 1) {
+					$scope.listDetail[i].status = 1;
+					alertify.success('Data berhasil diubah');
+				}
+				if (t == 2) $scope.loadDetail($scope.currentRbm);
 			});
 		};
 	}
@@ -182,6 +205,30 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 				$scope.tusbung = d;
 			});
 		};
+	}
+	
+	if ($scope.submenu == 'laporan') {
+		$scope.rbmList = [];
+		$scope.report = {
+			unit: $scope.myUnit(), rbm: '', blth: ''
+		};
+		$scope.loadRBM = function() {
+			$scope.report.rbm = '';
+			$http({ url: $scope.server + '/rbm/unit/' + $scope.report.unit, method: 'GET' }).
+			success(function(d) { $scope.rbmList = d; });
+		};
+		if ($scope.myUnit() != 0) $scope.loadRBM();		
+		$scope.blth = [];
+		$scope.getblth = function() {
+			$http({ url: $scope.server + '/blth', method: 'GET' }).
+			success(function(d) { 
+				for (var i in d) {
+					if (d[i].status == '1') $scope.report.blth = d[i].id;
+					break;
+				}
+				$scope.blth = d;
+			});
+		}; $scope.getblth();
 	}
 }
 PelangganCtrl.$inject = ['$scope', '$http', '$cookies', '$location', 'loader', '$routeParams'];

@@ -311,18 +311,9 @@ app.directive('loadMap', ['$cookies', '$http', function($cookies, $http) {
 			$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
 			$http({ url: $scope.server + '/map/rbm/' + attrs.loadMap, method: 'GET' }).
 			success(function(d) { 
-				var $exbtn = $('#export-map-btn');
-				if (d.center.length == 0) {
-					$exbtn.addClass('hide');
-					return alertify.error('RBM tidak memiliki data peta');
-				}
-				$exbtn.removeClass('hide');
-				
-				// set mapParam
-				$scope.mapParams.center = d.center.join(',');
-				$scope.mapParams.zoom = 16;
-				$scope.mapParams.size = '640x640';
-				$scope.mapParams.maptype = 'road';
+				var $exbtn = $('#link-map-open');
+				if (d.center.length == 0) return alertify.error('RBM tidak memiliki data peta');
+				$exbtn.attr('href', '#/map/rbm/' + attrs.loadMap);
 				
 				$scope.setKoordinat(d);
 				var center = d.center, 
@@ -340,9 +331,7 @@ app.directive('loadMap', ['$cookies', '$http', function($cookies, $http) {
 				var map = new google.maps.Map(div, Opts);
 				google.maps.event.trigger(map, 'resize');
 				
-				var nodes = [],
-					path = [],
-					markers = [];
+				var nodes = [];
 				var iw = new google.maps.InfoWindow();
 				for (var i = 0; i < data.length; i++) {
 					var ds = data[i],
@@ -357,16 +346,10 @@ app.directive('loadMap', ['$cookies', '$http', function($cookies, $http) {
 						labelInBackground: false,
 						constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
 					});
-					
-					// untuk peta static
-					//markers.push('markers=color:red|label:' + ds.urut + '|' + ds.lat + ',' + ds.longt);
-					markers.push(ds.lat + ',' + ds.longt);
-					path.push = ds.lat + ',' + ds.longt;
 						
 					google.maps.event.addListener(marker, 'click', function() { 
 					iw.setContent(this.constring);
-					iw.open(map, this); }); 
-					
+					iw.open(map, this); });
 					nodes.push(pos);
 				}
 				
@@ -377,10 +360,7 @@ app.directive('loadMap', ['$cookies', '$http', function($cookies, $http) {
 					strokeOpacity: 1.0,
 					strokeWeight: 1
 				});
-				
 				rutePath.setMap(map);
-				markers = 'markers=color:red|label:P|' + markers.join('|'); 
-				$exbtn.attr('href', 'http://maps.googleapis.com/maps/api/staticmap?' + jQuery.param($scope.mapParams) + '&' + markers);
 			});
 		});
 	};
@@ -398,8 +378,6 @@ app.directive('loadMapGardu', ['$cookies', '$http', function($cookies, $http) {
 			success(function(d) {
 				if (d.center.length == 0) return alertify.error('Gardu tidak memiliki data peta');
 				$scope.setKoordinat(d);
-				//$scope.currentGardu = attrs.loadMapGardu;
-				//$scope.$apply();
 				$('#link-map-open').attr('href', '#/map/gardu/' + attrs.loadMapGardu);
 				
 				var center = d.center, 
@@ -443,9 +421,6 @@ app.directive('loadMapGardu', ['$cookies', '$http', function($cookies, $http) {
 						constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
 					});
 					
-					// untuk peta static
-					//$scope.mapParams.markers.push = 'markers=color:red|label:' + ds.urut + '|' + ds.lat + ',' + ds.longt;
-						
 					google.maps.event.addListener(marker, 'click', function() { 
 					iw.setContent(this.constring);
 					iw.open(map, this); }); 
@@ -463,15 +438,18 @@ app.directive('loadMapGardu', ['$cookies', '$http', function($cookies, $http) {
 app.directive('loadMap2', ['$cookies', '$http', function($cookies, $http) {
 	return function($scope, elm, attrs) {
 		elm.on('click', function() {
-			//$scope.resetKoordinat();
+			$scope.resetKoordinat();
 			$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
 			$http({ url: $scope.server + '/map/tagihan/' + attrs.loadMap2, method: 'GET' }).
 			success(function(d) {
 				if (d.center.length == 0) return alertify.error('RBM tidak memiliki data peta');
-				
+				if (d.data.length == 0) return alertify.error('RBM tidak memiliki data peta');
+				$scope.setKoordinat(d);
 				$scope.showDetail = false;
 				$scope.showMap = true;
-
+				
+				$('#link-map-open').attr('href', '#/map/tagihan/' + attrs.loadMap2);
+				
 				var center = d.center, 
 					data = d.data,
 					div = document.getElementById(attrs.container);
@@ -503,7 +481,7 @@ app.directive('loadMap2', ['$cookies', '$http', function($cookies, $http) {
 						labelInBackground: false,
 						constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
 					});
-						
+					
 					google.maps.event.addListener(marker, 'click', function() { 
 					iw.setContent(this.constring);
 					iw.open(map, this); }); 
@@ -584,7 +562,7 @@ app.directive('mapAutoLoader', ['$cookies', '$http', function($cookies, $http) {
 					if (d.center.length == 0) return alertify.error('RBM tidak memiliki data peta');
 					var center = d.center, 
 						data = d.data,
-						div = document.getElementById(attrs.container);
+						div = document.getElementById('map-container');
 					
 					var latlng = new google.maps.LatLng(center[0], center[1]);
 					var Opts = {

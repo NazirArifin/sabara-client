@@ -120,11 +120,6 @@ function DataCtrl($scope, $http, $cookies, $location, loader) {
 			$scope.koordinat = { data: [], center: [] };
 		}; $scope.resetKoordinat();
 		$scope.setKoordinat = function(d) { $scope.koordinat = d; };
-		$scope.mapParams = {};
-		$scope.currentGardu = 'gimana';
-		$scope.getGarduLink = function() {
-			return $scope.currentGardu;
-		};
 	}
 	
 	// rbm
@@ -235,7 +230,6 @@ function DataCtrl($scope, $http, $cookies, $location, loader) {
 			$scope.koordinat = { data: [], center: [] };
 		}; $scope.resetKoordinat();
 		$scope.setKoordinat = function(d) { $scope.koordinat = d; };
-		$scope.mapParams = {};
 	}
 	
 	// impor data dari pln

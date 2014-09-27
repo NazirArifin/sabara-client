@@ -57,8 +57,8 @@
 												<td>{{c.rpbk}}</td>
 												<td>
 													<div class="btn-group btn-group-xs">
-														<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.rbm}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
 														<button class="btn" title="detail" data-ng-click="loadDetail(c.rbm)"><i class="fa fa-search"></i></button>
+														<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.rbm}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
 													</div>
 												</td>
 											</tr>
@@ -70,10 +70,10 @@
 									</ul>
 								</div>
 								<div class="col-md-7">
-									<div data-ng-show="showDetail">
+									<div data-ng-show="showDetail">{{showDetail}}
 										<h5 class="text-muted">Rincian Data Tagih RBM</h5>
 										<hr>
-										<table class="table table-bordered table-condensed table-striped small">
+										<table class="table table-bordered table-condensed table-striped small" data-ng-show="listDetail.length > 0">
 											<thead>
 												<tr>
 													<th>IDPEL</th>
@@ -97,16 +97,19 @@
 													<td>{{c.rpbk}}</td>
 													<td>
 														<div class="btn-group btn-group-xs">
-															<button class="btn btn-info" title="set cetak"><i class="fa fa-print"></i></button>
-															<button class="btn btn-danger" title="set tagih"><i class="fa fa-money"></i></button>
+															<button class="btn btn-info" title="set cetak" data-ng-show="c.status == 0" data-ng-click="setCetakLunas($index, 1)"><i class="fa fa-print"></i></button>
+															<button class="btn btn-danger" title="set lunas" data-ng-show="c.status == 1" data-ng-click="setCetakLunas($index, 2)"><i class="fa fa-money"></i></button>
 														</div>
 													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
-									<div data-ng-show="showMap">
-										<h5 class="text-muted"><i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan Nunggak</h5>
+									<div>
+										<h5 class="text-muted">
+											<i class="fa fa-fw fa-angle-right"></i> Peta Pelanggan Nunggak
+											<a href="" id="link-map-open" target="_blank" data-ng-disabled="koordinat.center.length == 0" class="btn btn-xs btn-primary pull-right"><i class="fa fa-fw fa-search-plus"></i> Lebih Besar</a>
+										</h5>
 										<hr>
 										<div class="well">
 											<div id="map-container" class="map"></div>
