@@ -28,6 +28,11 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 	when('/cetak/rekap/terima', { templateUrl: 'html/cetak-rekap-terima.html', controller: CetakCtrl }).
 	when('/pelanggan/data', { templateUrl: 'html/pelanggan-data.html', controller: PelangganCtrl }).
 	when('/pelanggan/:Idpel/detail', { templateUrl: 'html/pelanggan-detail.html', controller: PelangganCtrl }).
+	when('/pelanggan/keluhan', { templateUrl: 'html/pelanggan-keluhan.html', controller: PelangganCtrl }).
+	when('/pelanggan/npp', { templateUrl: 'html/pelanggan-npp.html', controller: PelangganCtrl }).
+	when('/pelanggan/tunggak', { templateUrl: 'html/pelanggan-tunggak.html', controller: PelangganCtrl }).
+	when('/tusbung/monitoring', { templateUrl: 'html/tusbung-monitoring.html', controller: PelangganCtrl }).
+	when('/tusbung/laporan', { templateUrl: 'html/tusbung-laporan.html', controller: PelangganCtrl }).
 	when('/user/petugas', { templateUrl: 'html/user-petugas.html', controller: UserCtrl }).
 	when('/user/koordinator', { templateUrl: 'html/user-koordinator.html', controller: UserCtrl }).
 	when('/user/administrator', { templateUrl: 'html/user-administrator.html', controller: UserCtrl }).
@@ -70,8 +75,13 @@ run(['$rootScope', '$location', function($rootScope, $location, $cookies) {
 			{url: '#/data/pln/impor', title: 'Impor Data Dari PLN', user: [1,2]},
 			{url: '#/data/pln/ekspor', title: 'Ekspor Data ke PLN', user: [1,2,4]}
 		]},
-		{title: 'Data Pelanggan', user: [1,2,3,4], icon: 'fa-users', item: [
-			{url: '#/pelanggan/data', title: 'Data Pelanggan & Histori', user: [1,2,3,4]}
+		{title: 'Pelanggan & Tusbung', user: [1,2,3,4], icon: 'fa-users', item: [
+			{url: '#/pelanggan/data', title: 'Data Pelanggan & Histori', user: [1,2,3,4]},
+			//{url: '#/pelanggan/keluhan', title: 'Keluhan Pelanggan', user: [1]},
+			{url: '#/pelanggan/npp', title: 'Impor Detail & Rekap Saldo', user: [1]},
+			{url: '#/pelanggan/tunggak', title: 'Pelanggan Nunggak Per RBM', user: [1]},
+			{url: '#/tusbung/monitoring', title: 'Monitoring Tusbung', user: [1]},
+			{url: '#/tusbung/laporan', title: 'Laporan Kinerja Tusbung', user: [1]},
 		]},
 		{title: 'Baca Meter', user: [1,2,3,4], icon: 'fa-barcode', item: [
 			{url: '#/meter/blth', title: 'Set Bulan Tahun Aktif', user: [1]},
