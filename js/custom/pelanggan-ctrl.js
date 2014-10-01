@@ -110,6 +110,14 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 	
 	// tunggak
 	if ($scope.submenu == 'tunggak') {
+		// detil atau map
+		$scope.showMap = true;
+		$scope.showDetail = false;
+		$scope.showMapContainer = function() {
+			$scope.showDetail = false;
+			$scope.showMap = true;
+		};
+		
 		$scope.tunggak = {
 			unit: $scope.myUnit(), keyword: '', cpage: 0
 		};
@@ -117,6 +125,7 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 		$scope.rbmList = [];
 		$scope.loadRbm = function() {
 			loader.show();
+			$scope.showDetail = false;
 			$http({ method: 'GET', url: $scope.server + '/tunggakan?' + jQuery.param($scope.tunggak) }).
 			success(function(d) {
 				loader.hide();
@@ -137,14 +146,6 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 			if (n > $scope.tunggak.numpage - 1) return;
 			$scope.tunggak.cpage++;
 			$scope.loadRbm();
-		};
-		
-		// detil atau map
-		$scope.showMap = true;
-		$scope.showDetail = false;
-		$scope.showMapContainer = function() {
-			$scope.showDetail = false;
-			$scope.showMap = true;
 		};
 		
 		// load Detail
@@ -206,22 +207,16 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 			}).
 			success(function(d) {
 				loader.hide();
+				if (d.length == 0) return alertify.error('Tidak ada data yang ditampilkan!');
 				$scope.tusbung = d;
 			});
 		};
 	}
 	
 	if ($scope.submenu == 'laporan') {
-		$scope.rbmList = [];
 		$scope.report = {
-			unit: $scope.myUnit(), rbm: '', blth: ''
+			unit: $scope.myUnit(), blth: ''
 		};
-		$scope.loadRBM = function() {
-			$scope.report.rbm = '';
-			$http({ url: $scope.server + '/rbm/unit/' + $scope.report.unit, method: 'GET' }).
-			success(function(d) { $scope.rbmList = d; });
-		};
-		if ($scope.myUnit() != 0) $scope.loadRBM();		
 		$scope.blth = [];
 		$scope.getblth = function() {
 			$http({ url: $scope.server + '/blth', method: 'GET' }).
@@ -233,6 +228,27 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 				$scope.blth = d;
 			});
 		}; $scope.getblth();
+		
+		// load Laporan
+		$scope.data = {};
+		$scope.loadGraph = 0;
+		$scope.series = { tagihan: [], lembar: [] };
+		$scope.categories = { tagihan: [], lembar: [] };
+		$scope.loadLaporan = function() {
+			if ($scope.report.unit == '') return alertify.error('Anda belum memilih unit!');
+			loader.show();
+			$http({ url: $scope.server + '/tusbung/laporan?' + jQuery.param($scope.report), method: 'GET' }).
+			success(function(d) { 
+				loader.hide();
+				if (d.data.length == 0) {
+					$scope.loadGraph = 0;
+					$scope.data = {};
+					return alertify.error('Tidak ada data pada bulan ini!');
+				}
+				$scope.data = d;
+				$scope.loadGraph = 1;
+			});
+		};
 	}
 }
 PelangganCtrl.$inject = ['$scope', '$http', '$cookies', '$location', 'loader', '$routeParams'];

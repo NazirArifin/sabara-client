@@ -744,6 +744,60 @@ app.directive('lineChart', ['$http', '$cookies', function($http, $cookies) {
 }]);
 
 /**
+ * Grafik tusbung
+ */
+app.directive('grafikTusbung', ['$http', '$cookies', function($http, $cookies) {
+	return {
+		restrict: 'A',
+		link: function($scope, elm, attrs) {
+			var draw = function(categ, series) {
+				elm.highcharts({
+					chart: { type: 'line' },
+					title: { text: 'Grafik Kinerja Pemutusan' },
+					subtitle: { text: 'DALAM ' + (attrs.grafikTusbung == 'lembar' ? 'LEMBAR' : 'RP') },
+					xAxis: { categories: categ },
+					yAxis: { title: { text: (attrs.grafikTusbung == 'lembar' ? 'Lembar' : 'Rp') } },
+					tooltip: {
+						enabled: false,
+						formatter: function() {
+							return this.x + ': ' + this.y;
+						}
+					},
+					plotOptions: {
+						line: { dataLabels: { enabled: true } },
+						enableMouseTracking: false
+					},
+					credits: {
+						enabled: true, text: 'SABARA', href: 'http://nazoftware.blogspot.com',
+					},
+					legend: {
+						layout: 'vertical', align: 'right', verticalAlign: 'middle', borderWidth: 0
+					},
+					series: series
+				});
+			};
+			var loadData = function() {
+				$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+				$http({ url: $scope.server + '/tusbung/graph/' + attrs.grafikTusbung + '/' + $scope.report.blth, method: "GET" }).
+				success(function(d) { 
+					draw(d.categories, d.series);
+					if (attrs.grafikTusbung == 'lembar') {
+						$scope.series.lembar = d.series;
+						$scope.categories.lembar = d.categories;
+					} else {
+						$scope.series.tagihan = d.series;
+						$scope.categories.tagihan = d.categories;
+					}
+				}).error(function(e, s, h) {});
+			};
+			attrs.$observe('load', function(v) {
+				if (attrs.load > 0) loadData();
+			});
+		}
+	};
+}]);
+
+/**
  * HAPUS ( TOMBOL DELETE )
  */
 

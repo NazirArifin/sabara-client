@@ -1,1 +1,1 @@
-uglifyjs main-ctrl.js data-ctrl.js cetak-ctrl.js meter-ctrl.js analisa-ctrl.js pelanggan-ctrl.js user-ctrl.js -o controllers.min.js
+uglifyjs main-ctrl.js data-ctrl.js cetak-ctrl.js meter-ctrl.js analisa-ctrl.js pelanggan-ctrl.js map-ctrl.js user-ctrl.js -o controllers.min.js

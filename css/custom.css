@@ -162,7 +162,7 @@ header.navbar-fixed-top {
 	margin-bottom: 0px;
 }
 
-.meter-dc td {
+.meter-dc td, .meter-dc th {
 	font-size: 11px;
 }
 
