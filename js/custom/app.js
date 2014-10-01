@@ -15,8 +15,11 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 	when('/meter/entry', { templateUrl: 'html/meter-entry.html', controller: MeterCtrl }).
 	when('/meter/impor', { templateUrl: 'html/meter-impor.html', controller: MeterCtrl }).
 	when('/meter/foto', { templateUrl: 'html/meter-foto.html', controller: MeterCtrl }).
+	when('/meter/rekap', { templateUrl: 'html/meter-rekap.html', controller: MeterCtrl }).
 	when('/analisa/lbkb', { templateUrl: 'html/analisa-lbkb.html', controller: AnalisaCtrl }).
 	when('/analisa/dlpd', { templateUrl: 'html/analisa-dlpd.html', controller: AnalisaCtrl }).
+	when('/analisa/rekap/rbm', { templateUrl: 'html/analisa-rbm.html', controller: AnalisaCtrl }).
+	when('/analisa/rekap/tarif', { templateUrl: 'html/analisa-tarif.html', controller: AnalisaCtrl }).
 	when('/cetak/dpm', { templateUrl: 'html/cetak-dpm.html', controller: CetakCtrl }).
 	when('/cetak/lbkb', { templateUrl: 'html/cetak-lbkb.html', controller: CetakCtrl }).
 	when('/cetak/badayabesar', { templateUrl: 'html/cetak-ba-dayabesar.html', controller: CetakCtrl }).
@@ -25,11 +28,6 @@ config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvide
 	when('/cetak/rekap/terima', { templateUrl: 'html/cetak-rekap-terima.html', controller: CetakCtrl }).
 	when('/pelanggan/data', { templateUrl: 'html/pelanggan-data.html', controller: PelangganCtrl }).
 	when('/pelanggan/:Idpel/detail', { templateUrl: 'html/pelanggan-detail.html', controller: PelangganCtrl }).
-	when('/pelanggan/keluhan', { templateUrl: 'html/pelanggan-keluhan.html', controller: PelangganCtrl }).
-	when('/pelanggan/npp', { templateUrl: 'html/pelanggan-npp.html', controller: PelangganCtrl }).
-	when('/pelanggan/tunggak', { templateUrl: 'html/pelanggan-tunggak.html', controller: PelangganCtrl }).
-	when('/tusbung/monitoring', { templateUrl: 'html/tusbung-monitoring.html', controller: PelangganCtrl }).
-	when('/tusbung/laporan', { templateUrl: 'html/tusbung-laporan.html', controller: PelangganCtrl }).
 	when('/user/petugas', { templateUrl: 'html/user-petugas.html', controller: UserCtrl }).
 	when('/user/koordinator', { templateUrl: 'html/user-koordinator.html', controller: UserCtrl }).
 	when('/user/administrator', { templateUrl: 'html/user-administrator.html', controller: UserCtrl }).
@@ -72,19 +70,15 @@ run(['$rootScope', '$location', function($rootScope, $location, $cookies) {
 			{url: '#/data/pln/impor', title: 'Impor Data Dari PLN', user: [1,2]},
 			{url: '#/data/pln/ekspor', title: 'Ekspor Data ke PLN', user: [1,2,4]}
 		]},
-		{title: 'Pelanggan & Tusbung', user: [1,2,3,4], icon: 'fa-users', item: [
-			{url: '#/pelanggan/data', title: 'Data Pelanggan & Histori', user: [1,2,3,4]},
-			//{url: '#/pelanggan/keluhan', title: 'Keluhan Pelanggan', user: [1]},
-			{url: '#/pelanggan/npp', title: 'Impor Detail & Rekap Saldo', user: [1]},
-			{url: '#/pelanggan/tunggak', title: 'Pelanggan Nunggak Per RBM', user: [1]},
-			{url: '#/tusbung/monitoring', title: 'Monitoring Tusbung', user: [1]},
-			{url: '#/tusbung/laporan', title: 'Laporan Kinerja Tusbung', user: [1]},
+		{title: 'Data Pelanggan', user: [1,2,3,4], icon: 'fa-users', item: [
+			{url: '#/pelanggan/data', title: 'Data Pelanggan & Histori', user: [1,2,3,4]}
 		]},
 		{title: 'Baca Meter', user: [1,2,3,4], icon: 'fa-barcode', item: [
 			{url: '#/meter/blth', title: 'Set Bulan Tahun Aktif', user: [1]},
 			{url: '#/meter/entry', title: 'Entry & Koreksi Stand KWH Meter', user: [1,2]},
 			{url: '#/meter/impor', title: 'Hasil & Impor Pembacaan Meter', user: [1,2]},
-			{url: '#/meter/foto', title: 'Unggah Foto Pembacaan', user: [1,2]}
+			{url: '#/meter/foto', title: 'Unggah Foto Pembacaan', user: [1,2]},
+			{url: '#/meter/rekap', title: 'Rekap Pencatatan', user: [1,2,3]}
 		]},
 		{title: 'Cetak & Laporan', user: [1,2,3,4], icon: 'fa-print', item: [
 			{url: '#/cetak/dpm', title: 'Cetak DPM per RBM', user: [1,2,4]},
@@ -96,8 +90,9 @@ run(['$rootScope', '$location', function($rootScope, $location, $cookies) {
 		]},
 		{title: 'Analisa Data', user: [1,2,3,4], icon: 'fa-bar-chart-o', item: [
 			{url: '#/analisa/lbkb', title: 'Rekap LBKB', user: [1,2,3,4]},
-			{url: '#/analisa/dlpd', title: 'Monitoring DLPD', user: [1,2,3,4]}
-			//{url: '#/analisa/kwhganda', title: 'Pemakaian KWH Tarif Ganda', user: [1,2,3,4]}
+			{url: '#/analisa/dlpd', title: 'Monitoring DLPD', user: [1,2,3,4]},
+			{url: '#/analisa/rekap/rbm', title: 'Rekap Pelanggan Per RBM', user: [1,2,3]},
+			{url: '#/analisa/rekap/tarif', title: 'Rekap Pelanggan Per Tarif', user: [1,2,3]}
 		]},
 		{title: 'Petugas & Pengguna', user: [1,2], icon: 'fa-user', item: [
 			{url: '#/user/administrator', title: 'Administrator', user: [1]},

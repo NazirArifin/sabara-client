@@ -28,7 +28,7 @@ function AnalisaCtrl($scope, $http, $cookies, $location, loader) {
 		success(function(d) { 
 			for (var i in d) {
 				if (d[i].status == '1') {
-					$scope.adlpd.blth= $scope.catat.blth1 = $scope.catat.blth2 = d[i].id;
+					$scope.adlpd.blth = $scope.catat.blth1 = $scope.catat.blth2 = $scope.arbm.blth = $scope.atarif.blth = d[i].id;
 					break;
 				}
 			}
@@ -72,7 +72,7 @@ function AnalisaCtrl($scope, $http, $cookies, $location, loader) {
 		};
 		
 		$scope.getParam = function() {
-			return jQuery.param({unit: $scope.adlpd.unit, blth: $scope.adlpd.blth, dlpd: $scope.getChecked()});
+			return jQuery.param({unit: $scope.adlpd.unit, blth: $scope.adlpd.blth, dlpd: $scope.getChecked(), rbm: $scope.adlpd.rbm});
 		};
 		
 		$scope.dlpdList = [];
@@ -114,6 +114,69 @@ function AnalisaCtrl($scope, $http, $cookies, $location, loader) {
 		$scope.loadGraph = 0;
 		$scope.setLoadGraph = function(d) { $scope.loadGraph = d; };
 		$scope.getParam = function() { return jQuery.param($scope.catat); };
+	}
+	
+	// analisa per rbm
+	$scope.arbm = {};
+	if ($scope.submenu == 'rbm') {
+		$scope.rbmList = [];
+		
+		$scope.resetArbm = function() {
+			$scope.arbm = { unit: $scope.myUnit(), blth: '', kdproses: '' };
+		}; $scope.resetArbm();
+		
+		$scope.kdproses = [];
+		$scope.loadKdProses = function() {
+			$http({ url: $scope.server + '/kodeproses', method: 'GET' }).
+			success(function(d) {
+				$scope.kdproses.push({ id: '', kode: '', nama: '-- kode proses --' });
+				for (var i in d) $scope.kdproses.push(d[i]);
+			});
+		}; $scope.loadKdProses();
+		
+		$scope.loadData = function() {
+			if ($scope.arbm.unit == 0) return alertify.error('Anda belum memilih unit');
+			if ($scope.arbm.kdproses == '') return alertify.error('Anda belum memilih kode proses');
+			loader.show();
+			$http({ url: $scope.server + '/analisa/rbm?' + jQuery.param($scope.arbm), method: 'GET' }).
+			success(function(d) {
+				loader.hide();
+				$scope.rbmList = d;
+			});
+		};
+		
+		$scope.getURL = function() { return jQuery.param($scope.arbm); };
+	}
+	
+	$scope.atarif = {};
+	if ($scope.submenu == 'tarif') {
+		$scope.rbmList = [];
+		
+		$scope.resetAtarif = function() {
+			$scope.atarif = { unit: $scope.myUnit(), blth: '', kdproses: '' };
+		}; $scope.resetAtarif();
+		
+		$scope.kdproses = [];
+		$scope.loadKdProses = function() {
+			$http({ url: $scope.server + '/kodeproses', method: 'GET' }).
+			success(function(d) {
+				$scope.kdproses.push({ id: '', kode: '', nama: '-- kode proses --' });
+				for (var i in d) $scope.kdproses.push(d[i]);
+			});
+		}; $scope.loadKdProses();
+		
+		$scope.loadData = function() {
+			if ($scope.arbm.unit == 0) return alertify.error('Anda belum memilih unit');
+			if ($scope.arbm.kdproses == '') return alertify.error('Anda belum memilih kode proses');
+			loader.show();
+			$http({ url: $scope.server + '/analisa/tarif?' + jQuery.param($scope.atarif), method: 'GET' }).
+			success(function(d) {
+				loader.hide();
+				$scope.rbmList = d;
+			});
+		};
+		
+		$scope.getURL = function() { return jQuery.param($scope.atarif); };
 	}
 }
 AnalisaCtrl.$inject = ['$scope', '$http', '$cookies', '$location', 'loader'];

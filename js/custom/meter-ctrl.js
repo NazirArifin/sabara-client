@@ -135,5 +135,31 @@ function MeterCtrl($scope, $http, $cookies, $location, loader) {
 		$scope.numfiles = '';
 		$scope.setNumFiles = function(d) { $scope.numfiles = d; };
 	}
+	
+	if ($scope.submenu == 'rekap') {
+		$scope.loadUnit();
+		$scope.rekap = { unit: $scope.myUnit() };
+		$scope.dataBaca = [];
+		$scope.loadData = function() {
+			if ($scope.rekap.unit == '') return alertify.error('Anda belum memilih unit');
+			loader.show();
+			$http({ url: $scope.server + '/rekapbaca/' + $scope.rekap.unit, method: 'GET' }).
+			success(function(d) {
+				$scope.dataBaca = d;
+				loader.hide();
+				if (d.length == 0) alertify.error('Tidak ada data yang ditampilkan');
+			});
+		};
+		
+		$scope.prepareData = function() {
+			if ($scope.rekap.unit == '') return alertify.error('Anda belum memilih unit');
+			loader.show();
+			$http({ url: $scope.server + '/rekapbaca/prepare/' + $scope.rekap.unit, method: 'GET' }).
+			success(function(d) {
+				loader.hide();
+				alertify.success('Data berhasil dipersiapkan. Klik tampilkan untuk melihat hasil data');
+			});
+		};
+	}
 }
 DataCtrl.$inject = ['$scope', '$http', '$cookies', '$location', 'loader'];
