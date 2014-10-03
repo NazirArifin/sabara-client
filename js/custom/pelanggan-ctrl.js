@@ -211,6 +211,19 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 				$scope.tusbung = d;
 			});
 		};
+		
+		// tombol lunas dan cetak
+		$scope.setLunas = function(i) {
+			loader.show();
+			$http({ url: $scope.server + '/tusbung/lunas/' + $scope.tusbung[i].id, method: 'GET' }).
+			success(function(d) {
+				loader.hide();
+				if (d.status == 1) {
+					alertify.success('Data berhasil diubah');
+					$scope.loadTusbung();
+				}
+			});
+		};
 	}
 	
 	if ($scope.submenu == 'laporan') {
@@ -228,6 +241,7 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 				$scope.blth = d;
 			});
 		}; $scope.getblth();
+		$scope.getParam = function() { return jQuery.param($scope.report); };
 		
 		// load Laporan
 		$scope.data = {};

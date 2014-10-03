@@ -54,18 +54,19 @@
 									<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="tusbung.length > 0">
 										<thead>
 											<tr>
-												<th>JAM TUSBUNG</th>
+												<th>JAM</th>
 												<th>PETUGAS</th>
 												<th>IDPEL</th>
 												<th>NAMA</th>
 												<th>ALAMAT</th>
 												<th>TARIF/DAYA</th>
-												<th>KETERANGAN</th>
+												<th>LBKB</th>
 												<th>FOTO 1</th>
 												<th>FOTO 2</th>
 												<th>LEMBAR</th>
 												<th>RPTG</th>
 												<th>RPBK</th>
+												<th>AKSI</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -77,11 +78,16 @@
 												<td>{{c.alamat}}</td>
 												<td>{{c.td}}</td>
 												<td>{{c.ketbaca}}</td>
-												<td><a href="" data-target="{{server}}{{c.foto1}}" image-preview><img data-ng-src="{{server}}{{c.foto1}}?thumb" alt="foto meter" class="img-thumbnail img-preview"></a></td>
-												<td><a href="" data-target="{{server}}{{c.foto2}}" image-preview><img data-ng-src="{{server}}{{c.foto2}}?thumb" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+												<td><a href="" data-target="{{server}}{{c.foto1}}" image-preview><img data-ng-src="{{server}}{{c.foto1}}" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+												<td><a href="" data-target="{{server}}{{c.foto2}}" image-preview><img data-ng-src="{{server}}{{c.foto2}}" alt="foto meter" class="img-thumbnail img-preview"></a></td>
 												<td>{{c.lembar}}</td>
 												<td>{{c.rptag}}</td>
 												<td>{{c.rpbk}}</td>
+												<td>
+													<div class="btn-group btn-group-xs" data-ng-show="c.status == '1'">
+														<button class="btn btn-danger" title="set lunas" data-ng-click="setLunas($index)"><i class="fa fa-money"></i></button>
+													</div>
+												</td>
 											</tr>
 										</tbody>
 									</table>
