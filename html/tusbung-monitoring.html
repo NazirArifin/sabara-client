@@ -51,6 +51,36 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
+									
+									
+									<!--
+									<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="tusbung.length > 0">
+										<thead>
+											<tr>
+												<th>JAM / PETUGAS</th>
+												<th>PLGGN</th>
+												<th>FOTO</th>
+												<th>TAGIHAN</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in tusbung">
+												<td>{{c.jam}}<br>{{c.petugas}}<br>{{c.ketbaca}}</td>
+												<td>{{c.idpel}}<br>{{c.nama}}<br>{{c.alamat}}<br>{{c.td}}</td>
+												<td><a href="" data-target="{{server}}{{c.foto1}}" image-preview><img data-ng-src="{{server}}{{c.foto1}}" alt="foto meter" class="img-thumbnail img-preview"></a> <a href="" data-target="{{server}}{{c.foto2}}" image-preview><img data-ng-src="{{server}}{{c.foto2}}" alt="foto meter" class="img-thumbnail img-preview"></a></td>
+												<td>LEMBAR: {{c.lembar}}<br>RPTAG: {{c.rptag}}<br>RPBK: {{c.rpbk}}</td>
+												<td>
+													<div class="btn-group btn-group-xs">
+														<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
+														<button class="btn btn-danger"  data-ng-show="c.status == '1'" title="set lunas" data-ng-click="setLunas($index)"><i class="fa fa-money"></i></button>
+													</div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									-->
+									
 									<table class="table table-bordered table-condensed table-striped table-hover" data-ng-show="tusbung.length > 0">
 										<thead>
 											<tr>
@@ -77,7 +107,7 @@
 												<td>{{c.nama}}</td>
 												<td>{{c.alamat}}</td>
 												<td>{{c.td}}</td>
-												<td>{{c.ketbaca}}</td>
+												<td><strong class="tooltips" title="{{c.ketbaca}}">{{c.kdbaca}}</strong></td>
 												<td><a href="" data-target="{{server}}{{c.foto1}}" image-preview><img data-ng-src="{{server}}{{c.foto1}}" alt="foto meter" class="img-thumbnail img-preview"></a></td>
 												<td><a href="" data-target="{{server}}{{c.foto2}}" image-preview><img data-ng-src="{{server}}{{c.foto2}}" alt="foto meter" class="img-thumbnail img-preview"></a></td>
 												<td>{{c.lembar}}</td>
@@ -85,12 +115,14 @@
 												<td>{{c.rpbk}}</td>
 												<td>
 													<div class="btn-group btn-group-xs" data-ng-show="c.status == '1'">
+														<!--<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map2="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>-->
 														<button class="btn btn-danger" title="set lunas" data-ng-click="setLunas($index)"><i class="fa fa-money"></i></button>
 													</div>
 												</td>
 											</tr>
 										</tbody>
 									</table>
+									
 								</div>
 							</div>
 						</div>
