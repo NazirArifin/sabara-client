@@ -207,7 +207,10 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 			}).
 			success(function(d) {
 				loader.hide();
-				if (d.length == 0) return alertify.error('Tidak ada data yang ditampilkan!');
+				if (d.length == 0) {
+					$scope.tusbung = d;
+					return alertify.error('Tidak ada data yang ditampilkan!');
+				}
 				$scope.tusbung = d;
 			});
 		};

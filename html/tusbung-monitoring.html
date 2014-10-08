@@ -21,23 +21,38 @@
 								<div class="col-md-8 col-md-offset-2">
 									<div class="well">
 										<form role="form" class="form-horizontal" name="formi">
-											<!--<div class="form-group" data-ng-show="needUnit()">
-												<label for="hp-unit" class="col-md-2 col-md-offset-1 control-label">UNIT:</label>
-												<div class="col-md-3">
-													<select name="unit" id="hp-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="hp.unit" data-ng-change="loadRBM()">
-														<option value="0">-- pilih unit --</option>
-													</select>
-												</div>
-											</div>-->
+									
+										<div class="form-group">
+											<label for="dpm-unit" class="col-md-1 col-md-offset-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+											<div class="col-md-3" data-ng-show="needUnit()">
+												<select name="unit" id="hp-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="hp.unit" data-ng-change="loadRBM()">
+													<option value="0">-- pilih unit --</option>
+												</select>
+											</div>
+											<label for="hp-rbm" class="col-md-1 control-label" data-ng-class="{ 'col-md-offset-1': ! needUnit() }">RBM:</label>
+											<div class="col-md-3">
+												<select name="rbm" id="hp-rbm" class="form-control" data-ng-model="hp.rbm" data-ng-options="c.id as c.nama for c in rbmList">
+													<option value="">-- semua rbm --</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="hp-tgl" class="col-md-1 col-md-offset-1 control-label">TGL:</label>
+											<div class="col-md-3">
+												<input type="text" name="tanggal" id="hp-tgl" class="form-control" data-ng-model="hp.tgl" datepicker>
+											</div>
+											<div class="col-md-5">
+												<button class="btn btn-primary" data-ng-click="loadTusbung()"><i class="fa fa-fw fa-search"></i> Tampilkan</button>
+											</div>
+										</div>
+										
+										</form>
+																				
+										<!--
+										<form role="form" class="form-horizontal" name="formi">
 											<div class="form-group">
-												<!--<label for="hp-rbm" class="col-md-2 control-label col-md-offset-1">RBM:</label>
-												<div class="col-md-3">
-													<select name="rbm" id="hp-rbm" class="form-control" data-ng-model="hp.rbm" data-ng-options="c.id as c.nama for c in rbmList">
-														<option value="">-- pilih rbm --</option>
-													</select>
-												</div>-->
 												<label for="hp-tgl" class="col-md-2 col-md-offset-1 control-label">TANGGAL:</label>
-												<div class="col-md-3">
+												<div class="col-md-2">
 													<input type="text" name="tanggal" id="hp-tgl" class="form-control" data-ng-model="hp.tgl" datepicker>
 												</div>
 												<div class="col-md-4 col-md-offset-1">
@@ -45,7 +60,7 @@
 												</div>
 											</div>
 										</form>
-									</div>
+										-->
 									</div>
 								</div>
 							</div>
