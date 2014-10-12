@@ -76,6 +76,9 @@ app.directive('select2Idpel', function() {
 			elm.select2({
 				placeholder: 'Ketik IDPEL',
 				minimumInputLength: 2,
+				initSelection: function(element, callback) {
+					var id = $(element).val();
+				},
 				ajax: {
 					url: $scope.server + '/listidpel',
 					type: 'GET',
@@ -95,6 +98,10 @@ app.directive('select2Idpel', function() {
 			}).on('change', function(e) {
 				ctrl.$setViewValue(e.val)
 				$scope.$apply();
+			});
+			$scope.$watch(attrs.ngModel, function() {
+				var v = $scope.$eval(attrs.ngModel);
+				elm.select2('val', v);
 			});
 		}
 	};
