@@ -76,12 +76,12 @@ run(['$rootScope', '$location', function($rootScope, $location, $cookies) {
 			{url: '#/data/pln/ekspor', title: 'Ekspor Data ke PLN', user: [1,2,4]}
 		]},
 		{title: 'Pelanggan & Tusbung', user: [1,2,3,4], icon: 'fa-users', item: [
+			{url: '#/pelanggan/keluhan', title: 'Pengaduan Pelanggan', user: [1]},
 			{url: '#/pelanggan/data', title: 'Data Pelanggan & Histori', user: [1,2,3,4]},
-			//{url: '#/pelanggan/keluhan', title: 'Keluhan Pelanggan', user: [1]},
 			{url: '#/pelanggan/npp', title: 'Impor Detail & Rekap Saldo', user: [1]},
 			{url: '#/pelanggan/tunggak', title: 'Pelanggan Nunggak Per RBM', user: [1]},
 			{url: '#/tusbung/monitoring', title: 'Monitoring Tusbung', user: [1]},
-			{url: '#/tusbung/laporan', title: 'Laporan Kinerja Tusbung', user: [1]},
+			{url: '#/tusbung/laporan', title: 'Laporan Kinerja Tusbung', user: [1]}
 		]},
 		{title: 'Baca Meter', user: [1,2,3,4], icon: 'fa-barcode', item: [
 			{url: '#/meter/blth', title: 'Set Bulan Tahun Aktif', user: [1]},

@@ -1,0 +1,107 @@
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb breadcrumb-main">
+			<li><a href="#/home">Aplikasi</a></li>
+			<li><a href="#/menu/{{curMenu}}">{{getParentTitle()}}</a></li>
+			<li class="active"><span class="label label-warning">{{getItemTitle(0)|uppercase}}</span></li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="well widget">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-12">
+						<h4 class="text-info"><i class="fa fa-angle-double-right"></i> PENGADUAN PELANGGAN</h4>
+						<div class="spacer-h"></div>
+							<div class="container-fluid">
+							<div class="row">
+								<div class="col-md-5">
+									<h5>ISIAN DATA ADUAN PELANGGAN</h5><hr>
+									<form class="form-horizontal well" role="form" name="formap">
+										<div class="form-group">
+											<label for="ap-idpel" class="col-md-3 control-label">IDPEL:</label>
+											<div class="col-md-5">
+												<input type="text" style="width: 100%" class="select2-idpel" name="idpel" id="ap-idpel" data-ng-model="ap.idpel" number-input maxlength="15" data-ng-change="changeAp()">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="ap-nama" class="col-md-3 control-label">NAMA:</label>
+											<div class="col-md-7">
+												<input type="text" class="form-control" name="nama" id="ap-nama" data-ng-model="ap.nama">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="ap-alamat" class="col-md-3 control-label">ALAMAT:</label>
+											<div class="col-md-7">
+												<input type="text" class="form-control" name="alamat" id="ap-alamat" data-ng-model="ap.alamat" readonly>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="ap-telepon" class="col-md-3 control-label">TELEPON/HP:</label>
+											<div class="col-md-5">
+												<input type="text" class="form-control" name="alamat" id="ap-telepon" data-ng-model="ap.telepon" number-input maxlength="15">
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="ap-aduan" class="col-md-3 control-label">ADUAN:</label>
+											<div class="col-md-9">
+												<textarea name="aduan" id="ap-aduan" cols="30" rows="4" class="form-control" data-ng-model="ap.aduan"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="ap-tl" class="col-md-3 control-label">TNDK LANJUT:</label>
+											<div class="col-md-9">
+												<textarea name="tl" id="ap-tl" cols="30" rows="4" class="form-control" data-ng-model="ap.tl"></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col-md-9 col-md-offset-3">
+												<button class="btn btn-primary" save-aduan>SIMPAN DATA</button>
+												<button class="btn btn-default" data-ng-click="resetAp()">BATAL</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="col-md-7">
+									<h5>DATA ADUAN PELANGGAN</h5><hr>
+									<table class="table table-bordered table-condensed table-striped table-hover small">
+										<thead>
+											<tr>
+												<th>TANGGAL</th>
+												<th>IDPEL</th>
+												<th>ADUAN</th>
+												<th>TL</th>
+												<th>AKSI</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr data-ng-repeat="c in apList">
+												<td>{{c.tanggal}}</td>
+												<td><span class="popovers" data-content="{{c.info}}">{{c.idpel}}</span></td>
+												<td>{{c.aduan}}</td>
+												<td>{{c.tl}}</td>
+												<td>
+													<a href="" class="btn btn-xs btn-default tooltips" title="sunting" data-ng-click="setAduan($index)"><i class="fa fa-pencil"></i></a>
+													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" delete-aduan="{{c.id}}"><i class="fa fa-trash-o"></i></a>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+									<ul class="pagination pagination-sm">
+										<li data-ng-class="{ disabled: cpage == 0 }"><a href="" data-ng-click="prevPage()">&laquo;</a></li>
+										<li data-ng-repeat="n in range(numpage)" data-ng-class="{ active: n == cpage }"><a href="" data-ng-click="setPage()" data-ng-bind="n + 1">1</a></li>
+										<li data-ng-class="{ disabled: cpage == numpage - 1 }"><a href="" data-ng-click="nextPage()">&raquo;</a></li>
+									</ul>
+								</div>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

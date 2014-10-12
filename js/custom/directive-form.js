@@ -498,3 +498,29 @@ app.directive('savePassword', ['loader', '$cookies', '$http', function(loader, $
 		});
 	};
 }]);
+
+/** simpan data aduan **/
+app.directive('saveAduan', ['loader', '$cookies', '$http', function(loader, $cookies, $http) {
+	return function($scope, elm, attrs) {
+		elm.on('click', function(e) {
+			if ($scope.ap.idpel.length < 10) return alertify.error('IDPEL tidak lengkap!');
+			if ($scope.ap.telepon.length < 4) return alertify.error('Telepon harus diisi!');
+			if ($scope.ap.aduan.length < 4) return alertify.error('Data aduan harus diisi!');
+			
+			loader.show();
+			$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+			$http({ 
+				url: $scope.server + '/aduan', 
+				method: 'POST', 
+				data: $scope.ap
+			}).
+			success(function(d) {
+				loader.hide();
+				alertify.success('Data aduan berhasil disimpan!');
+				$scope.resetAp();
+				$scope.loadAp();
+			}).
+			error(function(e, s, h) { loader.hide(); });
+		});
+	};
+}]);

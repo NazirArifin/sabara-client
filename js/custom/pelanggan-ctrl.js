@@ -23,6 +23,61 @@ function PelangganCtrl($scope, $http, $cookies, $location, loader, $routeParams)
 	};
 	$scope.loadUnit();
 	
+	// aduan pelanggan
+	if ($scope.submenu == 'keluhan') {
+		$scope.ap = {};
+		$scope.resetAp = function() {
+			$scope.ap = {
+				id: '', idpel: '', nama: '', alamat: '', info: '', telepon: '', aduan: '', tl: ''
+			};
+		}; $scope.resetAp();
+		$scope.changeAp = function() {
+			$http({ url: $scope.server + '/pelanggan/detail/' + $scope.ap.idpel, method: 'GET' }).
+			success(function(d) {
+				$scope.ap.nama = d.nama;
+				$scope.ap.alamat = d.alamat;
+			});
+		};
+		
+		$scope.apList = [];
+		$scope.numpage = 0;
+		$scope.cpage = 0;
+		$scope.loadAp = function() {
+			$http({ url: $scope.server + '/aduan?cpage=' + $scope.cpage, method: 'GET' }).
+			success(function(d) {
+				$scope.numpage = d.numpage;
+				$scope.apList = d.data;
+			});
+		}; $scope.loadAp();
+		$scope.setAduan = function(i) {
+			$scope.ap = $scope.apList[i];
+		};
+		
+		// pagination
+		$scope.setPage = function() {
+			$scope.cpage = this.n;
+			$scope.loadAp();
+		};
+		$scope.prevPage = function() {
+			if ($scope.cpage > 0)
+				$scope.cpage--;
+			$scope.loadAp();
+		};
+		$scope.nextPage = function() {
+			if ($scope.cpage < $scope.numpage - 1)
+				$scope.cpage++;
+			$scope.loadAp();
+		};
+		$scope.range = function(start, end)  {
+			var r = [];
+			if ( ! end) {
+				end = start; start = 0;
+			}
+			for (var i = start; i < end; i++) r.push(i);
+			return r;
+		};
+	}
+	
 	// datapelanggan
 	if ($scope.submenu == 'data') {
 		$scope.datapel = {};

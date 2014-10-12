@@ -223,6 +223,16 @@ function DataCtrl($scope, $http, $cookies, $location, loader) {
 			$scope.erbm.nama = $scope.rbmList[i].nama;
 			$scope.erbm.petugas = $scope.rbmList[i].petugas;
 		};*/
+		$scope.updateTanggal = function(i) {
+			loader.show();
+			var data = $scope.rbmList[i];
+			$http({
+				url: $scope.server + '/rbm/' + data.id, 
+				method: 'POST',
+				data: jQuery.param(data)
+			}).
+			success(function(d) { loader.hide(); });
+		};
 		
 		// load map
 		$scope.koordinat = {};

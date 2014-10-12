@@ -41,7 +41,8 @@
 										<thead>
 											<tr>
 												<th>KODE RBM</th>
-												<th>HARI</th>
+												<!--<th>HARI</th>-->
+												<th>TANGGAL</th>
 												<th>PETUGAS</th>
 												<th>JUMLAH</th>
 												<th>DAYA</th>
@@ -51,7 +52,43 @@
 										<tbody>
 											<tr data-ng-repeat="c in rbmList">
 												<td>{{c.nama}}</td>
-												<td>{{c.hari}}</td>
+												<!--<td>{{c.hari}}</td>-->
+												<td>
+													<select name="tanggal" id="tanggal" class="form-control" data-ng-model="c.tanggal" data-ng-change="updateTanggal($index)">
+														<option value="">0</option>
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+														<option value="6">6</option>
+														<option value="7">7</option>
+														<option value="8">8</option>
+														<option value="9">9</option>
+														<option value="10">10</option>
+														<option value="11">11</option>
+														<option value="12">12</option>
+														<option value="13">13</option>
+														<option value="14">14</option>
+														<option value="15">15</option>
+														<option value="16">16</option>
+														<option value="17">17</option>
+														<option value="18">18</option>
+														<option value="19">19</option>
+														<option value="20">20</option>
+														<option value="21">21</option>
+														<option value="22">22</option>
+														<option value="23">23</option>
+														<option value="24">24</option>
+														<option value="25">25</option>
+														<option value="26">26</option>
+														<option value="27">27</option>
+														<option value="28">28</option>
+														<option value="29">29</option>
+														<option value="30">30</option>
+														<option value="31">31</option>
+													</select>
+												</td>
 												<td data-ng-hide="editing && row == $index"><span data-ng-class="{ 'label label-danger' : c.nama_petugas == 'UNSET' }">{{c.nama_petugas}}</span></td>
 												<td data-ng-show="editing && row == $index">
 													<select name="petugas" id="petugas" class="form-control" data-ng-model="c.petugas" data-ng-options="c.id as c.nama for c in petugasList">
@@ -62,8 +99,11 @@
 												<td>{{c.daya}}</td>
 												<td>
 													<a href="" class="btn btn-xs btn-default tooltips" data-ng-hide="editing && row == $index" title="ubah petugas" data-ng-click="setPetugas($index)"><i class="fa fa-user"></i></a>
+													
 													<button class="btn btn-xs btn-primary tooltips" title="simpan petugas" data-ng-show="editing && row == $index" data-ng-click="updatePetugas($index)"><i class="fa fa-check"></i></button>
+													
 													<a href="" class="btn btn-xs btn-danger tooltips" title="hapus" data-placement="left" data-ng-show="c.total == '0'" delete-rbm="{{c.id}}"><i class="fa fa-trash-o"></i></a>
+													
 													<a href="" class="btn btn-xs btn-info tooltips" title="peta" load-map="{{c.id}}" data-container="map-container"><i class="fa fa-map-marker"></i></a>
 												</td>
 											</tr>

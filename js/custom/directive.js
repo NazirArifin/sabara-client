@@ -36,6 +36,25 @@ app.directive('tooltips', function() {
 });
 
 /**
+ * Popover
+ */
+app.directive('popovers', function() {
+	return {
+		restrict: 'C',
+		link: function($scope, elm, attrs) {
+			return attrs.$observe('content', function(v) {
+				elm.popover({
+					placement: attrs.placement || 'top',
+					animation: false,
+					trigger: 'hover',
+					html: true,
+				});
+			});
+		}
+	}
+});
+
+/**
  * Select2
  */
 app.directive('select2', function() {
@@ -925,6 +944,27 @@ app.directive('deleteRbm', ['loader', '$cookies', '$http', function(loader, $coo
 						loader.hide();
 						$scope.loadRbm();
 						alertify.success('Data RBM berhasil dihapus');
+					}).
+					error(function(e, s, h) { loader.hide(); });
+				}
+			});
+		});
+	};
+}]);
+
+/** hapus aduan */
+app.directive('deleteAduan', ['loader', '$cookies', '$http', function(loader, $cookies, $http) {
+	return function($scope, elm, attrs) {
+		elm.on('click', function() {
+			alertify.confirm('<strong class="text-danger">PERINGATAN: Data ' + $scope.submenu + ' yang dihapus tidak dapat dikembalikan lagi.</strong><br><br><strong>Apakah Anda yakin?</strong>', function(e) {
+				if(e) {
+					$http.defaults.headers.common['Authorization'] = 'Basic ' + Base64.encode($cookies.username + ':' + $cookies.password);
+					loader.show();
+					$http({ url: $scope.server + '/aduan/' + attrs.deleteAduan, method: 'DELETE' }).
+					success(function(d) {
+						loader.hide();
+						$scope.loadAp();
+						alertify.success('Data pengaduan berhasil dihapus');
 					}).
 					error(function(e, s, h) { loader.hide(); });
 				}
