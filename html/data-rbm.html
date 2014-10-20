@@ -18,11 +18,11 @@
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-md-5">
-									<div class="well" data-ng-show="needUnit()">
+									<div class="well">
 										<form role="form" class="form-horizontal" name="formesm">
 											<div class="form-group">
-												<label for="e-unit" class="col-md-1 control-label">UNIT:</label>
-												<div class="col-md-4">
+												<label for="e-unit" class="col-md-1 control-label" data-ng-show="needUnit()">UNIT:</label>
+												<div class="col-md-4" data-ng-show="needUnit()">
 													<select name="unit" id="e-unit" class="select2" style="width: 100%" data-ng-options="c.id as c.nama for c in unit" data-ng-model="rbm.unit">
 														<option value="0">-- pilih unit --</option>
 													</select>
