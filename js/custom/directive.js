@@ -362,16 +362,28 @@ app.directive('loadMap', ['$cookies', '$http', function($cookies, $http) {
 				for (var i = 0; i < data.length; i++) {
 					var ds = data[i],
 						pos = new google.maps.LatLng(ds.lat, ds.longt);
-					var marker = new MarkerWithLabel({
-						position: pos,
-						map: map,
-						title: ds.idpel + ' - ' + ds.nama,
-						labelContent: ds.urut,
-						labelAnchor: new google.maps.Point(5, 33),
-						labelClass: "labels",
-						labelInBackground: false,
-						constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
-					});
+					
+					if(ds.idpel=='GARDU'){
+ 						// marker untuk gardu
+ 						var marker = new MarkerWithLabel({
+ 							position: pos,
+ 							map: map,
+ 							title: ds.nama,
+ 							labelContent: ds.nama,
+ 							icon: 'img/tiang.png'
+ 						});
+ 					} else {
+ 						var marker = new MarkerWithLabel({
+ 							position: pos,
+ 							map: map,
+ 							title: ds.idpel + ' - ' + ds.nama,
+ 							labelContent: ds.urut,
+ 							labelAnchor: new google.maps.Point(5, 33),
+ 							labelClass: "labels",
+ 							labelInBackground: false,
+ 							constring : '<TABLE ALIGN="center">' +'<TR>' +'<TH ROWSPAN=10><img src="' + $scope.server + '/img/'+ ds.idpel +'/'+ ds.bulan +'" width=180></img></TH>' +    '<TD>Tarif/Daya </TD>' + '<TD> : ' + ds.tarif + '/' + ds.daya + '</TD>' +'</TR>' +'<TR>' +'<TD>LWBP</TD>' + '<TD> : ' + ds.stan + '</TD>' +'</TR>' +'<TR>' +'<TD>Tgl Baca</TD>' + '<TD> : ' + ds.waktu + '</TD>' +'</TR>' +'<TR>' + '<TD>Koduk</TD>' + '<TD> : ' + ds.koduk + '</TD>' +'</TR>' +'</TABLE>'
+ 						});
+ 					}
 						
 					google.maps.event.addListener(marker, 'click', function() { 
 					iw.setContent(this.constring);
